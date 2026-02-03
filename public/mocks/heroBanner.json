@@ -1,0 +1,22 @@
+{
+  "subtitle": "Bộ sưu tập mới 2025",
+  "title": "Phong Cách",
+  "titleHighlight": "Định Nghĩa Bạn",
+  "description": "Khám phá bộ sưu tập thời trang mới nhất với thiết kế hiện đại, chất liệu cao cấp.",
+  "primaryButton": {
+    "text": "Mua sắm ngay",
+    "link": "/san-pham"
+  },
+  "secondaryButton": {
+    "text": "Xem bộ sưu tập",
+    "link": "/bo-suu-tap"
+  },
+  "sliderImages": [
+    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 1" },
+    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 2" },
+    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 3" },
+    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 4" },
+    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 5" },
+    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 6" }
+  ]
+}
