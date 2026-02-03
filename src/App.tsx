@@ -1,6 +1,6 @@
 import Header from './components/common/Header'
 import Footer from './components/common/Footer'
-import HomePage from './pages/HomePage'
+import HomePage from './pages/client/HomePage'
 
 function App() {
   return (
