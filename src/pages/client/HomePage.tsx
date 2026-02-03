@@ -1,11 +1,11 @@
 import HeroBanner from '../../components/home/HeroBanner'
+import BestSeller from '../../components/home/BestSeller'
 
 const HomePage = () => {
   return (
     <div>
       <HeroBanner />
-
-      {/* Các section khác sẽ thêm sau */}
+      <BestSeller />
     </div>
   )
 }

@@ -13,10 +13,10 @@
   },
   "sliderImages": [
     { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 1" },
-    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 2" },
-    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 3" },
-    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 4" },
-    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 5" },
-    { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 6" }
+    { "url": "https://minio.theciu.vn/theciu-beta/350/images/ycQ2eYJQ5L3rkL5oJmS5nIpnwe7bheCFlE8fLGrz.jpg", "alt": "Model 2" },
+    { "url": "https://minio.theciu.vn/theciu-beta/350/images/sXf2x7GTPzsLJdegH9v1GI1JIqhYf1NEqTVmZjiH.jpg", "alt": "Model 3" },
+    { "url": "https://minio.theciu.vn/theciu-beta/350/images/5ii4h8UxtjLJTQmfisAhEgCOBEksULjIs2QaSErk.jpg", "alt": "Model 4" },
+    { "url": "https://minio.theciu.vn/theciu-beta/350/images/oNUN0DIjJJH6Rqi8qEZCeujK9wwAfxP8uXcS5g91.jpg", "alt": "Model 5" },
+    { "url": "https://minio.theciu.vn/theciu-beta/350/images/19rCZ5qqTO8kl4KBF6zklydobJXO2cLCCdkJCha7.jpg", "alt": "Model 6" }
   ]
 }

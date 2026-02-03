@@ -1,0 +1,66 @@
+[
+  {
+    "product_id": 1,
+    "product_name": "Áo thun basic",
+    "unit_price": 250000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/hades0013_large_dcbce9d6cdad491a87ea3e3f39b278f1_large.jpeg",
+    "rating": 4.5,
+    "review_count": 120
+  },
+  {
+    "product_id": 2,
+    "product_name": "Quần jean slim fit",
+    "unit_price": 450000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/kkk_6fae522ad49a48d5ad05f6444086c807_large.png",
+    "rating": 4.8,
+    "review_count": 85
+  },
+  {
+    "product_id": 3,
+    "product_name": "Áo sơ mi trắng",
+    "unit_price": 350000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/hades0131_large_8ab52169b1c5483d95016eef09105191_large.jpeg",
+    "rating": 4.2,
+    "review_count": 64
+  },
+  {
+    "product_id": 4,
+    "product_name": "Váy midi công sở",
+    "unit_price": 550000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/insane0585_large_b3b9cb2eb0924610975bb4acde962e49_large.jpeg",
+    "rating": 4.7,
+    "review_count": 92
+  },
+  {
+    "product_id": 5,
+    "product_name": "Áo khoác bomber",
+    "unit_price": 650000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/hades0075_large_150f7743a8f64f529c9e312c3364bcc9_large.jpeg",
+    "rating": 4.9,
+    "review_count": 156
+  },
+  {
+    "product_id": 6,
+    "product_name": "Quần tây âu",
+    "unit_price": 400000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/270126hades3808_c7d31406111346ac8cd25c5c557d4baa_large.jpg",
+    "rating": 4.3,
+    "review_count": 47
+  },
+  {
+    "product_id": 7,
+    "product_name": "Đầm maxi hoa",
+    "unit_price": 480000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/og_1_5f83b91d713046f188480ff1bcd37b52_large.png",
+    "rating": 4.6,
+    "review_count": 78
+  },
+  {
+    "product_id": 8,
+    "product_name": "Áo polo nam",
+    "unit_price": 320000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/hades4314_703fd92a94564ccf8d950a99b4397d6f_large.jpg",
+    "rating": 4.4,
+    "review_count": 103
+  }
+]
