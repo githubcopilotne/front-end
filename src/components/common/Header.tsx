@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Search, Heart, ShoppingBag, User, Menu, X } from 'lucide-react'
+import { Search, Heart, ShoppingBag, CircleUserRound, Menu, X } from 'lucide-react'
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -48,8 +48,14 @@ const Header = () => {
                 0
               </span>
             </button>
-            <button className="p-2 text-gray-800 hover:text-[#111111] transition-colors">
-              <User size={20} />
+            {/* Nút đăng nhập - Desktop */}
+            <button className="hidden lg:flex items-center gap-2 bg-[#111111] text-white px-4 py-2 rounded-full font-medium hover:bg-gray-800 transition-colors">
+              <CircleUserRound size={20} className='mt-0.5' />
+              <span className="text-sm mt-0.5">Đăng nhập</span>
+            </button>
+            {/* Nút đăng nhập - Tablet/Mobile */}
+            <button className="lg:hidden p-2 text-gray-800 hover:text-[#111111] transition-colors">
+              <CircleUserRound size={20} />
             </button>
           </div>
 
@@ -66,7 +72,7 @@ const Header = () => {
               <ShoppingBag  size={20} />
               </button>
               <button className="p-2 text-gray-800">
-                <User size={20} />
+                <CircleUserRound size={20} />
               </button>
             <button
               className="p-2 text-gray-800"

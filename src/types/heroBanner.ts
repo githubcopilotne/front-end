@@ -7,10 +7,6 @@ export interface HeroBannerData {
     text: string
     link: string
   }
-  secondaryButton: {
-    text: string
-    link: string
-  }
   sliderImages: {
     url: string
     alt: string

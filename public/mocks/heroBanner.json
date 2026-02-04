@@ -7,10 +7,6 @@
     "text": "Mua sắm ngay",
     "link": "/san-pham"
   },
-  "secondaryButton": {
-    "text": "Xem bộ sưu tập",
-    "link": "/bo-suu-tap"
-  },
   "sliderImages": [
     { "url": "/images/Gemini_Generated_Image_qqvp87qqvp87qqvp.png", "alt": "Model 1" },
     { "url": "https://minio.theciu.vn/theciu-beta/350/images/ycQ2eYJQ5L3rkL5oJmS5nIpnwe7bheCFlE8fLGrz.jpg", "alt": "Model 2" },

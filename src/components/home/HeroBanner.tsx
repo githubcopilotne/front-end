@@ -44,12 +44,6 @@ const HeroBanner = () => {
                 {data.primaryButton.text}
                 <ArrowRight size={20} />
               </a>
-              <a
-                href={data.secondaryButton.link}
-                className="inline-flex items-center justify-center gap-2 border-2 border-[#111111] text-[#111111] px-8 py-4 font-medium hover:bg-[#111111] hover:text-white transition-colors rounded"
-              >
-                {data.secondaryButton.text}
-              </a>
             </div>
           </div>
 
