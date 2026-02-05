@@ -49,14 +49,14 @@ const Header = () => {
               </span>
             </button>
             {/* Nút đăng nhập - Desktop */}
-            <button className="hidden lg:flex items-center gap-2 bg-[#111111] text-white px-4 py-2 rounded-full font-medium hover:bg-gray-800 transition-colors">
+            <a href="/dang-nhap" className="hidden lg:flex items-center gap-2 bg-[#111111] text-white px-4 py-2 rounded-full font-medium hover:bg-gray-800 transition-colors">
               <CircleUserRound size={20} className='mt-0.5' />
               <span className="text-sm mt-0.5">Đăng nhập</span>
-            </button>
+            </a>
             {/* Nút đăng nhập - Tablet/Mobile */}
-            <button className="lg:hidden p-2 text-gray-800 hover:text-[#111111] transition-colors">
+            <a href="/dang-nhap" className="lg:hidden p-2 text-gray-800 hover:text-[#111111] transition-colors">
               <CircleUserRound size={20} />
-            </button>
+            </a>
           </div>
 
           {/* Mobile - Icons & Hamburger */}
@@ -71,9 +71,9 @@ const Header = () => {
               <button className="p-2 text-gray-800">
               <ShoppingBag  size={20} />
               </button>
-              <button className="p-2 text-gray-800">
+              <a href="/dang-nhap" className="p-2 text-gray-800">
                 <CircleUserRound size={20} />
-              </button>
+              </a>
             <button
               className="p-2 text-gray-800"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
