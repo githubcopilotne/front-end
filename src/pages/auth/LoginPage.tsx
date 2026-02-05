@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Eye, EyeOff } from 'lucide-react'
 
 const LoginPage = () => {
@@ -85,9 +86,9 @@ const LoginPage = () => {
 
             {/* Quên mật khẩu */}
             <div className="text-right">
-              <a href="/quen-mat-khau" className="text-sm text-gray-600 hover:text-[#111111] hover:underline">
+              <Link to="/quen-mat-khau" className="text-sm text-gray-600 hover:text-[#111111] hover:underline">
                 Quên mật khẩu?
-              </a>
+              </Link>
             </div>
 
             {/* Nút đăng nhập */}
@@ -135,9 +136,9 @@ const LoginPage = () => {
           {/* Link đăng ký */}
           <p className="mt-6 text-center text-gray-600">
             Chưa có tài khoản?{' '}
-            <a href="/dang-ky" className="text-[#111111] font-medium hover:underline">
+            <Link to="/dang-ky" className="text-[#111111] font-medium hover:underline">
               Đăng ký
-            </a>
+            </Link>
           </p>
         </div>
       </div>

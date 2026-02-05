@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Eye, EyeOff } from 'lucide-react'
 
 const RegisterPage = () => {
@@ -154,9 +155,9 @@ const RegisterPage = () => {
           {/* Link đăng nhập */}
           <p className="mt-6 text-center text-gray-600">
             Đã có tài khoản?{' '}
-            <a href="/dang-nhap" className="text-[#111111] font-medium hover:underline">
+            <Link to="/dang-nhap" className="text-[#111111] font-medium hover:underline">
               Đăng nhập
-            </a>
+            </Link>
           </p>
         </div>
       </div>

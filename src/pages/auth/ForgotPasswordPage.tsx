@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
 
 const ForgotPasswordPage = () => {
+  const navigate = useNavigate()
   const [step, setStep] = useState(1) // 1: nhập email, 2: nhập OTP, 3: đặt mật khẩu mới
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
@@ -69,7 +71,7 @@ const ForgotPasswordPage = () => {
     // TODO: Đặt lại mật khẩu
     console.log('Reset password:', passwords)
     // Sau khi thành công, chuyển về trang đăng nhập
-    window.location.href = '/dang-nhap'
+    navigate('/dang-nhap')
   }
 
   return (
@@ -78,13 +80,13 @@ const ForgotPasswordPage = () => {
         {/* Card */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           {/* Back link */}
-          <a
-            href="/dang-nhap"
+          <Link
+            to="/dang-nhap"
             className="inline-flex items-center gap-2 text-gray-600 hover:text-[#111111] mb-6"
           >
             <ArrowLeft size={20} />
             <span>Quay lại đăng nhập</span>
-          </a>
+          </Link>
 
           {/* Step 1: Nhập email */}
           {step === 1 && (

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Search, Heart, ShoppingBag, CircleUserRound, Menu, X } from 'lucide-react'
 
 const Header = () => {
@@ -16,20 +17,20 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="/" className="text-2xl font-bold text-[#111111]">
+          <Link to="/" className="text-2xl font-bold text-[#111111]">
             MAVELA
-          </a>
+          </Link>
 
           {/* Menu - Desktop */}
           <nav className="hidden md:flex items-center space-x-8">
             {menuItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
-                href={item.href}
+                to={item.href}
                 className="text-gray-800 hover:text-[#111111] font-medium transition-colors"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -49,19 +50,19 @@ const Header = () => {
               </span>
             </button>
             {/* Nút đăng nhập - Desktop */}
-            <a href="/dang-nhap" className="hidden lg:flex items-center gap-2 bg-[#111111] text-white px-4 py-2 rounded-full font-medium hover:bg-gray-800 transition-colors">
+            <Link to="/dang-nhap" className="hidden lg:flex items-center gap-2 bg-[#111111] text-white px-4 py-2 rounded-full font-medium hover:bg-gray-800 transition-colors">
               <CircleUserRound size={20} className='mt-0.5' />
               <span className="text-sm mt-0.5">Đăng nhập</span>
-            </a>
+            </Link>
             {/* Nút đăng nhập - Tablet/Mobile */}
-            <a href="/dang-nhap" className="lg:hidden p-2 text-gray-800 hover:text-[#111111] transition-colors">
+            <Link to="/dang-nhap" className="lg:hidden p-2 text-gray-800 hover:text-[#111111] transition-colors">
               <CircleUserRound size={20} />
-            </a>
+            </Link>
           </div>
 
           {/* Mobile - Icons & Hamburger */}
           <div className="flex md:hidden items-center space-x-2">
-            
+
              <button className="p-2 text-gray-800">
                 <Search size={20} />
               </button>
@@ -71,9 +72,9 @@ const Header = () => {
               <button className="p-2 text-gray-800">
               <ShoppingBag  size={20} />
               </button>
-              <a href="/dang-nhap" className="p-2 text-gray-800">
+              <Link to="/dang-nhap" className="p-2 text-gray-800">
                 <CircleUserRound size={20} />
-              </a>
+              </Link>
             <button
               className="p-2 text-gray-800"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -114,13 +115,14 @@ const Header = () => {
           {/* Menu items */}
           <nav className="flex flex-col p-4">
             {menuItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
-                href={item.href}
+                to={item.href}
                 className="py-3 text-gray-800 hover:text-[#111111] font-medium transition-colors border-b border-gray-100"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
