@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
+import OtpInput from '../../components/common/OtpInput'
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate()
@@ -13,43 +14,6 @@ const ForgotPasswordPage = () => {
     password: '',
     confirmPassword: '',
   })
-  const otpRefs = useRef<(HTMLInputElement | null)[]>([])
-
-  const handleOtpChange = (index: number, value: string) => {
-    // Chỉ cho phép nhập số
-    if (value && !/^\d$/.test(value)) return
-
-    const newOtp = [...otp]
-    newOtp[index] = value
-    setOtp(newOtp)
-
-    // Tự động nhảy sang ô tiếp theo
-    if (value && index < 5) {
-      otpRefs.current[index + 1]?.focus()
-    }
-  }
-
-  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    // Nhấn Backspace: xóa và quay lại ô trước
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      otpRefs.current[index - 1]?.focus()
-    }
-  }
-
-  const handleOtpPaste = (e: React.ClipboardEvent) => {
-    e.preventDefault()
-    const pasteData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6)
-    if (pasteData) {
-      const newOtp = [...otp]
-      for (let i = 0; i < pasteData.length; i++) {
-        newOtp[i] = pasteData[i]
-      }
-      setOtp(newOtp)
-      // Focus vào ô cuối cùng được điền
-      const lastIndex = Math.min(pasteData.length - 1, 5)
-      otpRefs.current[lastIndex]?.focus()
-    }
-  }
 
   const handleSendOtp = (e: React.FormEvent) => {
     e.preventDefault()
@@ -85,7 +49,7 @@ const ForgotPasswordPage = () => {
             className="inline-flex items-center gap-2 text-gray-600 hover:text-[#111111] mb-6"
           >
             <ArrowLeft size={20} />
-            <span>Quay lại đăng nhập</span>
+            <span>Quay lại</span>
           </Link>
 
           {/* Step 1: Nhập email */}
@@ -143,21 +107,7 @@ const ForgotPasswordPage = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-3 text-center">
                     Mã xác thực
                   </label>
-                  <div className="flex justify-center gap-2" onPaste={handleOtpPaste}>
-                    {otp.map((digit, index) => (
-                      <input
-                        key={index}
-                        ref={(el) => { otpRefs.current[index] = el }}
-                        type="text"
-                        inputMode="numeric"
-                        maxLength={1}
-                        value={digit}
-                        onChange={(e) => handleOtpChange(index, e.target.value)}
-                        onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                        className="w-12 h-14 text-center text-2xl font-semibold border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all"
-                      />
-                    ))}
-                  </div>
+                  <OtpInput value={otp} onChange={setOtp} />
                 </div>
 
                 <button
