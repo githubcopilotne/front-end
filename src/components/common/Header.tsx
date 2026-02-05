@@ -1,16 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, Heart, ShoppingBag, CircleUserRound, Menu, X } from 'lucide-react'
+import { Search, Heart, ShoppingBag, CircleUserRound, Menu, X, ChevronDown } from 'lucide-react'
+import type { Category } from '../../types/category'
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isProductDropdownOpen, setIsProductDropdownOpen] = useState(false)
+  const [openSection, setOpenSection] = useState<string | null>(null)
+  const [categories, setCategories] = useState<Category[]>([])
 
-  const menuItems = [
-    { label: 'Trang chủ', href: '/' },
-    { label: 'Sản phẩm', href: '/san-pham' },
-    { label: 'Giới thiệu', href: '/gioi-thieu' },
-    { label: 'Liên hệ', href: '/lien-he' },
-  ]
+  useEffect(() => {
+    fetch('/mocks/categories.json')
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+  }, [])
+
+  const toggleSection = (section: string) => {
+    setOpenSection(openSection === section ? null : section)
+  }
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-md">
@@ -23,15 +30,70 @@ const Header = () => {
 
           {/* Menu - Desktop */}
           <nav className="hidden md:flex items-center space-x-8">
-            {menuItems.map((item) => (
+            <Link
+              to="/"
+              className="text-gray-800 hover:text-[#111111] font-medium transition-colors"
+            >
+              Trang chủ
+            </Link>
+
+            {/* Sản phẩm với dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setIsProductDropdownOpen(true)}
+              onMouseLeave={() => setIsProductDropdownOpen(false)}
+            >
               <Link
-                key={item.href}
-                to={item.href}
-                className="text-gray-800 hover:text-[#111111] font-medium transition-colors"
+                to="/san-pham"
+                className="flex items-center gap-1 text-gray-800 hover:text-[#111111] font-medium transition-colors"
               >
-                {item.label}
+                Sản phẩm
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-300 ${isProductDropdownOpen ? 'rotate-180' : ''}`}
+                />
               </Link>
-            ))}
+
+              {/* Dropdown */}
+              <div
+                className={`absolute top-full left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-all duration-300 ease-in-out origin-top ${
+                  isProductDropdownOpen ? 'max-h-96 opacity-100 scale-y-100' : 'max-h-0 opacity-0 scale-y-0'
+                }`}
+              >
+                <div className="py-2">
+                  {categories.map((category) => (
+                    <Link
+                      key={category.category_id}
+                      to={`/san-pham/${category.slug}`}
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-[#111111] transition-colors"
+                    >
+                      {category.category_name}
+                    </Link>
+                  ))}
+                  <div className="border-t border-gray-100 mt-2 pt-2">
+                    <Link
+                      to="/san-pham"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-[#111111] font-medium transition-colors"
+                    >
+                      Tất cả sản phẩm
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <Link
+              to="/gioi-thieu"
+              className="text-gray-800 hover:text-[#111111] font-medium transition-colors"
+            >
+              Giới thiệu
+            </Link>
+            <Link
+              to="/lien-he"
+              className="text-gray-800 hover:text-[#111111] font-medium transition-colors"
+            >
+              Liên hệ
+            </Link>
           </nav>
 
           {/* Icons - Desktop */}
@@ -62,19 +124,18 @@ const Header = () => {
 
           {/* Mobile - Icons & Hamburger */}
           <div className="flex md:hidden items-center space-x-2">
-
-             <button className="p-2 text-gray-800">
-                <Search size={20} />
-              </button>
-              <button className="p-2 text-gray-800">
-                <Heart size={20} />
-              </button>
-              <button className="p-2 text-gray-800">
-              <ShoppingBag  size={20} />
-              </button>
-              <Link to="/dang-nhap" className="p-2 text-gray-800">
-                <CircleUserRound size={20} />
-              </Link>
+            <button className="p-2 text-gray-800">
+              <Search size={20} />
+            </button>
+            <button className="p-2 text-gray-800">
+              <Heart size={20} />
+            </button>
+            <button className="p-2 text-gray-800">
+              <ShoppingBag size={20} />
+            </button>
+            <Link to="/dang-nhap" className="p-2 text-gray-800">
+              <CircleUserRound size={20} />
+            </Link>
             <button
               className="p-2 text-gray-800"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -83,7 +144,6 @@ const Header = () => {
             </button>
           </div>
         </div>
-
       </div>
 
       {/* Mobile Menu - Slide from right */}
@@ -114,16 +174,68 @@ const Header = () => {
 
           {/* Menu items */}
           <nav className="flex flex-col p-4">
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                className="py-3 text-gray-800 hover:text-[#111111] font-medium transition-colors border-b border-gray-100"
-                onClick={() => setIsMobileMenuOpen(false)}
+            <Link
+              to="/"
+              className="py-3 text-gray-800 hover:text-[#111111] font-medium transition-colors border-b border-gray-100"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Trang chủ
+            </Link>
+
+            {/* Sản phẩm với accordion - giống style Footer */}
+            <div className="border-b border-gray-100">
+              <button
+                className="w-full py-3 flex items-center justify-between text-gray-800 hover:text-[#111111] font-medium transition-colors"
+                onClick={() => toggleSection('product')}
               >
-                {item.label}
-              </Link>
-            ))}
+                Sản phẩm
+                <ChevronDown
+                  size={20}
+                  className={`transition-transform duration-300 ${openSection === 'product' ? 'rotate-180' : ''}`}
+                />
+              </button>
+
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out origin-top ${
+                  openSection === 'product' ? 'max-h-60 opacity-100 scale-y-100' : 'max-h-0 opacity-0 scale-y-0'
+                }`}
+              >
+                <div className="pl-4 pb-2 space-y-2">
+                  {categories.map((category) => (
+                    <Link
+                      key={category.category_id}
+                      to={`/san-pham/${category.slug}`}
+                      className="block py-2 text-gray-600 hover:text-[#111111] transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {category.category_name}
+                    </Link>
+                  ))}
+                  <Link
+                    to="/san-pham"
+                    className="block py-2 text-gray-800 hover:text-[#111111] font-medium transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Tất cả sản phẩm
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <Link
+              to="/gioi-thieu"
+              className="py-3 text-gray-800 hover:text-[#111111] font-medium transition-colors border-b border-gray-100"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Giới thiệu
+            </Link>
+            <Link
+              to="/lien-he"
+              className="py-3 text-gray-800 hover:text-[#111111] font-medium transition-colors border-b border-gray-100"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Liên hệ
+            </Link>
           </nav>
         </div>
       </div>
