@@ -1,0 +1,66 @@
+[
+  {
+    "product_id": 1,
+    "product_name": "Áo thun basic cotton",
+    "unit_price": 250000,
+    "image_url": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
+    "rating": 4.5,
+    "review_count": 128
+  },
+  {
+    "product_id": 2,
+    "product_name": "Quần jeans slim fit",
+    "unit_price": 450000,
+    "image_url": "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400",
+    "rating": 4.8,
+    "review_count": 256
+  },
+  {
+    "product_id": 3,
+    "product_name": "Áo sơ mi trắng công sở",
+    "unit_price": 380000,
+    "image_url": "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400",
+    "rating": 4.6,
+    "review_count": 89
+  },
+  {
+    "product_id": 4,
+    "product_name": "Váy liền thân công sở",
+    "unit_price": 520000,
+    "image_url": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400",
+    "rating": 4.7,
+    "review_count": 67
+  },
+  {
+    "product_id": 5,
+    "product_name": "Áo hoodie oversize",
+    "unit_price": 350000,
+    "image_url": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400",
+    "rating": 4.9,
+    "review_count": 312
+  },
+  {
+    "product_id": 6,
+    "product_name": "Quần short kaki",
+    "unit_price": 280000,
+    "image_url": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400",
+    "rating": 4.4,
+    "review_count": 145
+  },
+  {
+    "product_id": 7,
+    "product_name": "Áo polo nam classic",
+    "unit_price": 320000,
+    "image_url": "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=400",
+    "rating": 4.5,
+    "review_count": 178
+  },
+  {
+    "product_id": 8,
+    "product_name": "Đầm maxi hoa nhí",
+    "unit_price": 680000,
+    "image_url": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400",
+    "rating": 4.8,
+    "review_count": 92
+  }
+]
