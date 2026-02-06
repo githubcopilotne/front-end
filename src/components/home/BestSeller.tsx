@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import type { Product } from '../../types/product'
 import ProductCard from '../common/ProductCard'
 
@@ -37,13 +38,13 @@ const BestSeller = () => {
 
         {/* Nút xem tất cả */}
         <div className="text-center mt-8">
-          <a
-            href="/san-pham?sort=ban-chay"
+          <Link
+            to="/san-pham?sort=ban-chay"
             className="inline-flex items-center gap-2 text-[#111111] font-medium hover:underline"
           >
             Xem tất cả
             <span>→</span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

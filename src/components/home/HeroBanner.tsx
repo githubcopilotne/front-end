@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import type { HeroBannerData } from '../../types/heroBanner'
 
@@ -37,13 +38,13 @@ const HeroBanner = () => {
               {data.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <a
-                href={data.primaryButton.link}
+              <Link
+                to={data.primaryButton.link}
                 className="inline-flex items-center justify-center gap-2 bg-[#111111] text-white px-8 py-4 font-medium hover:bg-gray-800 transition-colors rounded"
               >
                 {data.primaryButton.text}
                 <ArrowRight size={20} />
-              </a>
+              </Link>
             </div>
           </div>
 

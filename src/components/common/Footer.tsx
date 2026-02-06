@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Facebook, Instagram, Youtube, ChevronDown } from 'lucide-react'
 
 const Footer = () => {
@@ -14,9 +15,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
           {/* Cột 1: Logo + Mô tả */}
           <div>
-            <a href="/" className="text-2xl font-bold">
+            <Link to="/" className="text-2xl font-bold">
               MAVELA
-            </a>
+            </Link>
             <p className="mt-4 text-gray-400 text-sm">
               Thời trang chất lượng cao dành cho tất cả mọi người.
               Phong cách hiện đại, giá cả hợp lý.
@@ -42,24 +43,24 @@ const Footer = () => {
 
             <ul className={`space-y-2 text-gray-400 text-sm overflow-hidden transition-all duration-300 ease-in-out origin-top md:max-h-none md:opacity-100 md:scale-y-100 ${openSection === 'support' ? 'max-h-40 opacity-100 scale-y-100' : 'max-h-0 opacity-0 scale-y-0 md:max-h-none md:opacity-100 md:scale-y-100'}`}>
               <li>
-                <a href="/huong-dan-mua-hang" className="hover:text-white transition-colors">
+                <Link to="/huong-dan-mua-hang" className="hover:text-white transition-colors">
                   Hướng dẫn mua hàng
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/chinh-sach-doi-tra" className="hover:text-white transition-colors">
+                <Link to="/chinh-sach-doi-tra" className="hover:text-white transition-colors">
                   Chính sách đổi trả
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/chinh-sach-van-chuyen" className="hover:text-white transition-colors">
+                <Link to="/chinh-sach-van-chuyen" className="hover:text-white transition-colors">
                   Chính sách vận chuyển
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/faq" className="hover:text-white transition-colors">
+                <Link to="/faq" className="hover:text-white transition-colors">
                   Câu hỏi thường gặp
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -83,19 +84,19 @@ const Footer = () => {
 
             <ul className={`space-y-2 text-gray-400 text-sm overflow-hidden transition-all duration-300 ease-in-out origin-top md:max-h-none md:opacity-100 md:scale-y-100 ${openSection === 'about' ? 'max-h-40 opacity-100 scale-y-100' : 'max-h-0 opacity-0 scale-y-0 md:max-h-none md:opacity-100 md:scale-y-100'}`}>
               <li>
-                <a href="/gioi-thieu" className="hover:text-white transition-colors">
+                <Link to="/gioi-thieu" className="hover:text-white transition-colors">
                   Giới thiệu
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/lien-he" className="hover:text-white transition-colors">
+                <Link to="/lien-he" className="hover:text-white transition-colors">
                   Liên hệ
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/tuyen-dung" className="hover:text-white transition-colors">
+                <Link to="/tuyen-dung" className="hover:text-white transition-colors">
                   Tuyển dụng
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
