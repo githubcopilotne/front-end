@@ -7,6 +7,7 @@ import ProductDetailPage from './pages/client/ProductDetailPage'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
+import ProfilePage from './pages/client/ProfilePage'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/dang-nhap" element={<LoginPage />} />
             <Route path="/dang-ky" element={<RegisterPage />} />
             <Route path="/quen-mat-khau" element={<ForgotPasswordPage />} />
+            <Route path="/tai-khoan" element={<ProfilePage />} />
           </Routes>
         </main>
 
