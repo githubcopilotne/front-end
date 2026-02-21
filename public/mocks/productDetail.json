@@ -1,0 +1,78 @@
+{
+  "product_id": 1,
+  "product_name": "Áo thun nam cổ tròn basic",
+  "slug": "ao-thun-nam-co-tron-basic-1",
+  "unit_price": 250000,
+  "description": "Áo thun nam cổ tròn basic được làm từ chất liệu cotton 100% cao cấp, mềm mại và thoáng mát. Thiết kế đơn giản, dễ phối đồ, phù hợp cho mọi hoạt động hàng ngày. Form áo regular fit thoải mái, không bó sát. Đường may tỉ mỉ, chắc chắn. Sản phẩm có nhiều màu sắc và size để bạn lựa chọn.",
+  "rating": 4.5,
+  "review_count": 24,
+  "category": {
+    "category_id": 1,
+    "category_name": "Áo thun",
+    "slug": "ao-thun"
+  },
+  "images": [
+    {
+      "image_id": 1,
+      "image_url": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",
+      "is_main": 1
+    },
+    {
+      "image_id": 2,
+      "image_url": "https://images.unsplash.com/photo-1622445275576-721325763afe?w=800",
+      "is_main": 0
+    },
+    {
+      "image_id": 3,
+      "image_url": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800",
+      "is_main": 0
+    },
+    {
+      "image_id": 4,
+      "image_url": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800",
+      "is_main": 0
+    }
+  ],
+  "variants": [
+    { "variant_id": 1, "color": "Đen", "size": "S", "stock_quantity": 10 },
+    { "variant_id": 2, "color": "Đen", "size": "M", "stock_quantity": 15 },
+    { "variant_id": 3, "color": "Đen", "size": "L", "stock_quantity": 8 },
+    { "variant_id": 4, "color": "Đen", "size": "XL", "stock_quantity": 5 },
+    { "variant_id": 5, "color": "Trắng", "size": "S", "stock_quantity": 12 },
+    { "variant_id": 6, "color": "Trắng", "size": "M", "stock_quantity": 20 },
+    { "variant_id": 7, "color": "Trắng", "size": "L", "stock_quantity": 10 },
+    { "variant_id": 8, "color": "Trắng", "size": "XL", "stock_quantity": 6 },
+    { "variant_id": 9, "color": "Xám", "size": "S", "stock_quantity": 8 },
+    { "variant_id": 10, "color": "Xám", "size": "M", "stock_quantity": 14 },
+    { "variant_id": 11, "color": "Xám", "size": "L", "stock_quantity": 7 },
+    { "variant_id": 12, "color": "Xám", "size": "XL", "stock_quantity": 0 }
+  ],
+  "reviews": [
+    {
+      "user_name": "Nguyễn Văn A",
+      "rating": 5,
+      "comment": "Áo đẹp, chất vải mềm mại, mặc rất thoải mái. Giao hàng nhanh, đóng gói cẩn thận. Sẽ ủng hộ shop tiếp!",
+      "image_url": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400",
+      "created_at": "2025-01-15"
+    },
+    {
+      "user_name": "Trần Thị B",
+      "rating": 4,
+      "comment": "Chất lượng tốt so với giá tiền. Màu hơi khác so với hình một chút nhưng vẫn đẹp.",
+      "created_at": "2025-01-10"
+    },
+    {
+      "user_name": "Lê Văn C",
+      "rating": 5,
+      "comment": "Mua lần thứ 3 rồi, chất lượng ổn định. Form áo vừa vặn, không bị co sau khi giặt.",
+      "image_url": "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=400",
+      "created_at": "2025-01-05"
+    },
+    {
+      "user_name": "Phạm Thị D",
+      "rating": 4,
+      "comment": "Áo đẹp, đúng size. Ship hơi lâu nhưng chấp nhận được.",
+      "created_at": "2024-12-28"
+    }
+  ]
+}

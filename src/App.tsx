@@ -3,6 +3,7 @@ import Header from './components/common/Header'
 import Footer from './components/common/Footer'
 import HomePage from './pages/client/HomePage'
 import ProductListPage from './pages/client/ProductListPage'
+import ProductDetailPage from './pages/client/ProductDetailPage'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/san-pham" element={<ProductListPage />} />
+            <Route path="/san-pham/:slug" element={<ProductDetailPage />} />
             <Route path="/dang-nhap" element={<LoginPage />} />
             <Route path="/dang-ky" element={<RegisterPage />} />
             <Route path="/quen-mat-khau" element={<ForgotPasswordPage />} />

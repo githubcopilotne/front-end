@@ -12,7 +12,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <div className="group">
       {/* Ảnh sản phẩm */}
       <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-gray-100">
-        <Link to={`/san-pham/${product.product_id}`} className="block w-full h-full">
+        <Link to={`/san-pham/${product.slug}`} className="block w-full h-full">
           <img
             src={product.image_url}
             alt={product.product_name}
