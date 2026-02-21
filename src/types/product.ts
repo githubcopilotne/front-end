@@ -37,11 +37,7 @@ export interface ProductDetail {
   description: string
   rating: number
   review_count: number
-  category: {
-    category_id: number
-    category_name: string
-    slug: string
-  }
+
   images: ProductImage[]
   variants: ProductVariant[]
   reviews: ProductReview[]

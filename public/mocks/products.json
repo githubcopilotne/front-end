@@ -70,5 +70,149 @@
     "image_url": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400",
     "rating": 4.8,
     "review_count": 92
+  },
+  {
+    "product_id": 9,
+    "product_name": "Áo khoác bomber nam",
+    "slug": "ao-khoac-bomber-nam-9",
+    "unit_price": 590000,
+    "image_url": "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400",
+    "rating": 4.6,
+    "review_count": 204
+  },
+  {
+    "product_id": 10,
+    "product_name": "Quần tây âu nam",
+    "slug": "quan-tay-au-nam-10",
+    "unit_price": 420000,
+    "image_url": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400",
+    "rating": 4.3,
+    "review_count": 97
+  },
+  {
+    "product_id": 11,
+    "product_name": "Áo croptop nữ",
+    "slug": "ao-croptop-nu-11",
+    "unit_price": 195000,
+    "image_url": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400",
+    "rating": 4.7,
+    "review_count": 183
+  },
+  {
+    "product_id": 12,
+    "product_name": "Quần jogger thể thao",
+    "slug": "quan-jogger-the-thao-12",
+    "unit_price": 340000,
+    "image_url": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=400",
+    "rating": 4.5,
+    "review_count": 231
+  },
+  {
+    "product_id": 13,
+    "product_name": "Áo len cổ lọ",
+    "slug": "ao-len-co-lo-13",
+    "unit_price": 420000,
+    "image_url": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400",
+    "rating": 4.4,
+    "review_count": 76
+  },
+  {
+    "product_id": 14,
+    "product_name": "Chân váy xếp ly",
+    "slug": "chan-vay-xep-ly-14",
+    "unit_price": 310000,
+    "image_url": "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=400",
+    "rating": 4.6,
+    "review_count": 142
+  },
+  {
+    "product_id": 15,
+    "product_name": "Áo blazer nữ công sở",
+    "slug": "ao-blazer-nu-cong-so-15",
+    "unit_price": 750000,
+    "image_url": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400",
+    "rating": 4.8,
+    "review_count": 64
+  },
+  {
+    "product_id": 16,
+    "product_name": "Quần short jean nữ",
+    "slug": "quan-short-jean-nu-16",
+    "unit_price": 290000,
+    "image_url": "https://images.unsplash.com/photo-1565084888279-aca607ecce0c?w=400",
+    "rating": 4.3,
+    "review_count": 198
+  },
+  {
+    "product_id": 17,
+    "product_name": "Áo thun oversize unisex",
+    "slug": "ao-thun-oversize-unisex-17",
+    "unit_price": 275000,
+    "image_url": "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=400",
+    "rating": 4.7,
+    "review_count": 347
+  },
+  {
+    "product_id": 18,
+    "product_name": "Đầm sơ mi caro",
+    "slug": "dam-so-mi-caro-18",
+    "unit_price": 480000,
+    "image_url": "https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=400",
+    "rating": 4.5,
+    "review_count": 115
+  },
+  {
+    "product_id": 19,
+    "product_name": "Áo khoác denim",
+    "slug": "ao-khoac-denim-19",
+    "unit_price": 620000,
+    "image_url": "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=400",
+    "rating": 4.9,
+    "review_count": 287
+  },
+  {
+    "product_id": 20,
+    "product_name": "Quần culottes nữ",
+    "slug": "quan-culottes-nu-20",
+    "unit_price": 360000,
+    "image_url": "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400",
+    "rating": 4.4,
+    "review_count": 83
+  },
+  {
+    "product_id": 21,
+    "product_name": "Áo tank top thể thao",
+    "slug": "ao-tank-top-the-thao-21",
+    "unit_price": 180000,
+    "image_url": "https://images.unsplash.com/photo-1434389677669-e08b4cda3a0a?w=400",
+    "rating": 4.6,
+    "review_count": 156
+  },
+  {
+    "product_id": 22,
+    "product_name": "Quần legging gym",
+    "slug": "quan-legging-gym-22",
+    "unit_price": 295000,
+    "image_url": "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=400",
+    "rating": 4.7,
+    "review_count": 221
+  },
+  {
+    "product_id": 23,
+    "product_name": "Áo cardigan len mỏng",
+    "slug": "ao-cardigan-len-mong-23",
+    "unit_price": 395000,
+    "image_url": "https://images.unsplash.com/photo-1434389677669-e08b4cda3a0a?w=400",
+    "rating": 4.5,
+    "review_count": 109
+  },
+  {
+    "product_id": 24,
+    "product_name": "Váy midi chấm bi",
+    "slug": "vay-midi-cham-bi-24",
+    "unit_price": 540000,
+    "image_url": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400",
+    "rating": 4.8,
+    "review_count": 74
   }
 ]
