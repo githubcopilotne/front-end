@@ -1,29 +1,44 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Pencil } from 'lucide-react'
 import type { User } from '../../types/user'
 
-interface ProfileSectionProps {
-    user: User
-    setUser: (user: User) => void
-}
-
-const ProfileSection = ({ user, setUser }: ProfileSectionProps) => {
+const ProfileSection = () => {
+    const [user, setUser] = useState<User | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
     const [isEditing, setIsEditing] = useState(false)
     const [form, setForm] = useState({
-        full_name: user.full_name,
-        phone: user.phone,
-        gender: user.gender,
-        birthday: user.birthday,
-        address: user.address,
+        full_name: '',
+        phone: '',
+        gender: 1,
+        birthday: '',
+        address: '',
     })
 
+    useEffect(() => {
+        fetch('/mocks/user.json')
+            .then((res) => res.json())
+            .then((data: User) => {
+                setUser(data)
+                setForm({
+                    full_name: data.full_name,
+                    phone: data.phone,
+                    gender: data.gender,
+                    birthday: data.birthday,
+                    address: data.address,
+                })
+                setIsLoading(false)
+            })
+    }, [])
+
     const handleSave = () => {
+        if (!user) return
         // TODO: Call API to update user
         setUser({ ...user, ...form })
         setIsEditing(false)
     }
 
     const handleCancel = () => {
+        if (!user) return
         setForm({
             full_name: user.full_name,
             phone: user.phone,
@@ -32,6 +47,14 @@ const ProfileSection = ({ user, setUser }: ProfileSectionProps) => {
             address: user.address,
         })
         setIsEditing(false)
+    }
+
+    if (isLoading || !user) {
+        return (
+            <div className="text-center py-16">
+                <p className="text-gray-500">Đang tải...</p>
+            </div>
+        )
     }
 
     return (
