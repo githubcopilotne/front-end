@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
 import OtpInput from '../../components/common/OtpInput'
@@ -6,6 +6,8 @@ import authService from '../../services/authService'
 
 const RegisterPage = () => {
   const navigate = useNavigate()
+
+  // ==================== STATE ====================
   const [step, setStep] = useState(1) // 1: nhập form, 2: nhập OTP
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -16,11 +18,15 @@ const RegisterPage = () => {
     password: '',
     confirmPassword: '',
   })
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [apiError, setApiError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [otp, setOtp] = useState(['', '', '', '', '', ''])
+  const [errors, setErrors] = useState<Record<string, string>>({}) // Lỗi validate từng field
+  const [apiError, setApiError] = useState('') // Lỗi từ BE (email trùng, server lỗi...)
+  const [loading, setLoading] = useState(false) // Trạng thái đang gọi API
+  const [otp, setOtp] = useState(['', '', '', '', '', '']) // Mảng 6 ô OTP
+  const [countdown, setCountdown] = useState(0) // Đếm ngược nút "Gửi lại" (giây)
 
+  // ==================== HANDLERS ====================
+
+  // Cập nhật formData khi user nhập, xóa lỗi validate của field đó
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
     if (errors[e.target.name]) {
@@ -28,6 +34,7 @@ const RegisterPage = () => {
     }
   }
 
+  // Validate toàn bộ form, trả về true nếu hợp lệ
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {}
 
@@ -63,6 +70,7 @@ const RegisterPage = () => {
     return Object.keys(newErrors).length === 0
   }
 
+  // Step 1: Validate form → gọi API gửi OTP → chuyển sang Step 2
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault()
     setApiError('')
@@ -77,28 +85,68 @@ const RegisterPage = () => {
         fullName: formData.fullName,
         phone: formData.phone,
       })
+      setOtp(['', '', '', '', '', ''])
+      setApiError('')
       setStep(2)
+      setCountdown(60)
     } catch (err: any) {
       setApiError(err.response?.data?.message || 'Không thể kết nối server')
     }
     setLoading(false)
   }
 
-  const handleVerifyOtp = (e: React.FormEvent) => {
+  // Step 2: Gọi API xác thực OTP → thành công thì chuyển trang đăng nhập
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault()
+    setApiError('')
     const otpValue = otp.join('')
-    // TODO: Gọi API verify-otp
-    console.log('Verify OTP:', otpValue)
-    navigate('/dang-nhap')
+
+    setLoading(true)
+    try {
+      await authService.verifyOtp({
+        email: formData.email,
+        otpCode: otpValue,
+      })
+      navigate('/dang-nhap')
+    } catch (err: any) {
+      setApiError(err.response?.data?.message || 'Không thể kết nối server')
+    }
+    setLoading(false)
   }
 
+  // Gửi lại OTP: reset ô nhập, bắt đầu đếm ngược 60s, gọi lại API
+  const handleResendOtp = async () => {
+    setApiError('')
+    setCountdown(60)
+    setOtp(['', '', '', '', '', ''])
+    try {
+      await authService.sendOtp({
+        email: formData.email,
+        password: formData.password,
+        fullName: formData.fullName,
+        phone: formData.phone,
+      })
+    } catch (err: any) {
+      setApiError(err.response?.data?.message || 'Không thể kết nối server')
+    }
+  }
+
+  // ==================== EFFECTS ====================
+
+  // Đếm ngược mỗi giây, dừng khi về 0
+  useEffect(() => {
+    if (countdown <= 0) return
+    const timer = setTimeout(() => setCountdown(countdown - 1), 1000)
+    return () => clearTimeout(timer)
+  }, [countdown])
+
+  // ==================== RENDER ====================
   return (
     <div className="min-h-[calc(100vh-64px-200px)] bg-gray-50 flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
-        {/* Card */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
 
-          {/* Step 1: Form đăng ký */}
+          {/* ========== Step 1: Form đăng ký ========== */}
           {step === 1 && (
             <>
               {/* Header */}
@@ -111,14 +159,14 @@ const RegisterPage = () => {
                 </p>
               </div>
 
-              {/* Form */}
-              {/* API Error */}
+              {/* Thông báo lỗi từ BE */}
               {apiError && (
                 <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                  <p className="text-red-600 text-sm">{apiError}</p>
+                  <p className="text-red-600 text-sm text-center">{apiError}</p>
                 </div>
               )}
 
+              {/* Form nhập thông tin */}
               <form onSubmit={handleSubmitForm} className="space-y-4">
                 {/* Họ tên */}
                 <div>
@@ -243,7 +291,7 @@ const RegisterPage = () => {
                 </button>
               </form>
 
-              {/* Link đăng nhập */}
+              {/* Link chuyển sang đăng nhập */}
               <p className="mt-6 text-center text-gray-600">
                 Đã có tài khoản?{' '}
                 <Link to="/dang-nhap" className="text-[#111111] font-medium hover:underline">
@@ -253,19 +301,19 @@ const RegisterPage = () => {
             </>
           )}
 
-          {/* Step 2: Nhập OTP */}
+          {/* ========== Step 2: Nhập OTP ========== */}
           {step === 2 && (
             <>
-              {/* Back button */}
+              {/* Nút quay lại Step 1, clear lỗi cũ */}
               <button
-                onClick={() => setStep(1)}
+                onClick={() => { setApiError(''); setStep(1) }}
                 className="inline-flex items-center gap-2 text-gray-600 hover:text-[#111111] mb-6"
               >
                 <ArrowLeft size={20} />
                 <span>Quay lại</span>
               </button>
 
-              {/* Header */}
+              {/* Header — hiện email đã gửi OTP */}
               <div className="text-center mb-8">
                 <h1 className="text-2xl font-bold text-gray-900">
                   Xác thực email
@@ -275,7 +323,14 @@ const RegisterPage = () => {
                 </p>
               </div>
 
-              {/* Form OTP */}
+              {/* Thông báo lỗi từ BE (OTP sai, hết hạn...) */}
+              {apiError && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-600 text-sm text-center">{apiError}</p>
+                </div>
+              )}
+
+              {/* Form nhập OTP */}
               <form onSubmit={handleVerifyOtp} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-3 text-center">
@@ -284,22 +339,25 @@ const RegisterPage = () => {
                   <OtpInput value={otp} onChange={setOtp} />
                 </div>
 
+                {/* Nút xác minh — disable khi chưa nhập đủ 6 số hoặc đang loading */}
                 <button
                   type="submit"
-                  disabled={otp.some(d => !d)}
+                  disabled={otp.some(d => !d) || loading}
                   className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  Xác nhận
+                  {loading ? 'Đang xác minh...' : 'Xác minh'}
                 </button>
 
+                {/* Nút gửi lại OTP — disable trong 60s đếm ngược */}
                 <p className="text-center text-gray-600">
                   Không nhận được mã?{' '}
                   <button
                     type="button"
-                    onClick={() => console.log('Resend OTP')}
-                    className="text-[#111111] font-medium hover:underline"
+                    onClick={handleResendOtp}
+                    disabled={countdown > 0}
+                    className={`font-medium ${countdown > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-[#111111] hover:underline'}`}
                   >
-                    Gửi lại
+                    {countdown > 0 ? `Gửi lại (${countdown}s)` : 'Gửi lại'}
                   </button>
                 </p>
               </form>
