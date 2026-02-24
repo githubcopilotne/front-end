@@ -15,15 +15,63 @@ const RegisterPage = () => {
     password: '',
     confirmPassword: '',
   })
+  const [errors, setErrors] = useState<Record<string, string>>({})
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    // Xóa lỗi khi user bắt đầu nhập lại
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: '' })
+    }
+  }
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {}
+
+    // Họ tên
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Họ tên không được để trống'
+    }
+
+    // Email
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email không được để trống'
+    } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) {
+      newErrors.email = 'Email không đúng định dạng'
+    }
+
+    // Số điện thoại
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Số điện thoại không được để trống'
+    } else if (!/^0\d{9}$/.test(formData.phone.trim())) {
+      newErrors.phone = 'Số điện thoại phải bắt đầu bằng 0 và đủ 10 số'
+    }
+
+    // Mật khẩu
+    if (!formData.password) {
+      newErrors.password = 'Mật khẩu không được để trống'
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự'
+    }
+
+    // Xác nhận mật khẩu
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = 'Vui lòng nhập lại mật khẩu'
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Mật khẩu không khớp'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
   }
 
   const handleSubmitForm = (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Gửi thông tin đăng ký và yêu cầu OTP
+
+    if (!validateForm()) return
+
+    // TODO: Gọi API send-otp
     console.log('Register form:', formData)
     setStep(2)
   }
@@ -31,7 +79,7 @@ const RegisterPage = () => {
   const handleVerifyOtp = (e: React.FormEvent) => {
     e.preventDefault()
     const otpValue = otp.join('')
-    // TODO: Xác thực OTP và tạo tài khoản
+    // TODO: Gọi API verify-otp
     console.log('Verify OTP:', otpValue)
     navigate('/dang-nhap')
   }
@@ -69,9 +117,11 @@ const RegisterPage = () => {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder="Nguyễn Văn A"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all"
-                    required
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all ${errors.fullName ? 'border-red-500' : 'border-gray-300'}`}
                   />
+                  <div className="h-5">
+                    {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
+                  </div>
                 </div>
 
                 {/* Email */}
@@ -80,15 +130,17 @@ const RegisterPage = () => {
                     Email
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="example@gmail.com"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all"
-                    required
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
                   />
+                  <div className="h-5">
+                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                  </div>
                 </div>
 
                 {/* Số điện thoại */}
@@ -103,9 +155,11 @@ const RegisterPage = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="0912 345 678"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all"
-                    required
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
                   />
+                  <div className="h-5">
+                    {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+                  </div>
                 </div>
 
                 {/* Mật khẩu */}
@@ -121,8 +175,7 @@ const RegisterPage = () => {
                       value={formData.password}
                       onChange={handleChange}
                       placeholder="Tối thiểu 6 ký tự"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all pr-12"
-                      required
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all pr-12 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     <button
                       type="button"
@@ -131,6 +184,9 @@ const RegisterPage = () => {
                     >
                       {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
+                  </div>
+                  <div className="h-5">
+                    {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                   </div>
                 </div>
 
@@ -147,8 +203,7 @@ const RegisterPage = () => {
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       placeholder="Nhập lại mật khẩu"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all pr-12"
-                      required
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all pr-12 ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     <button
                       type="button"
@@ -157,6 +212,9 @@ const RegisterPage = () => {
                     >
                       {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
+                  </div>
+                  <div className="h-5">
+                    {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
                   </div>
                 </div>
 
