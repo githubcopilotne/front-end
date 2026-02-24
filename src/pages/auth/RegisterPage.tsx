@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
 import OtpInput from '../../components/common/OtpInput'
+import authService from '../../services/authService'
 
 const RegisterPage = () => {
   const navigate = useNavigate()
@@ -16,11 +17,12 @@ const RegisterPage = () => {
     confirmPassword: '',
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [apiError, setApiError] = useState('')
+  const [loading, setLoading] = useState(false)
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
-    // Xóa lỗi khi user bắt đầu nhập lại
     if (errors[e.target.name]) {
       setErrors({ ...errors, [e.target.name]: '' })
     }
@@ -29,33 +31,28 @@ const RegisterPage = () => {
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {}
 
-    // Họ tên
     if (!formData.fullName.trim()) {
       newErrors.fullName = 'Họ tên không được để trống'
     }
 
-    // Email
     if (!formData.email.trim()) {
       newErrors.email = 'Email không được để trống'
     } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) {
       newErrors.email = 'Email không đúng định dạng'
     }
 
-    // Số điện thoại
     if (!formData.phone.trim()) {
       newErrors.phone = 'Số điện thoại không được để trống'
     } else if (!/^0\d{9}$/.test(formData.phone.trim())) {
       newErrors.phone = 'Số điện thoại phải bắt đầu bằng 0 và đủ 10 số'
     }
 
-    // Mật khẩu
     if (!formData.password) {
       newErrors.password = 'Mật khẩu không được để trống'
     } else if (formData.password.length < 6) {
       newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự'
     }
 
-    // Xác nhận mật khẩu
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Vui lòng nhập lại mật khẩu'
     } else if (formData.password !== formData.confirmPassword) {
@@ -66,14 +63,25 @@ const RegisterPage = () => {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmitForm = (e: React.FormEvent) => {
+  const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault()
+    setApiError('')
 
     if (!validateForm()) return
 
-    // TODO: Gọi API send-otp
-    console.log('Register form:', formData)
-    setStep(2)
+    setLoading(true)
+    try {
+      await authService.sendOtp({
+        email: formData.email,
+        password: formData.password,
+        fullName: formData.fullName,
+        phone: formData.phone,
+      })
+      setStep(2)
+    } catch (err: any) {
+      setApiError(err.response?.data?.message || 'Không thể kết nối server')
+    }
+    setLoading(false)
   }
 
   const handleVerifyOtp = (e: React.FormEvent) => {
@@ -104,6 +112,13 @@ const RegisterPage = () => {
               </div>
 
               {/* Form */}
+              {/* API Error */}
+              {apiError && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-600 text-sm">{apiError}</p>
+                </div>
+              )}
+
               <form onSubmit={handleSubmitForm} className="space-y-4">
                 {/* Họ tên */}
                 <div>
@@ -221,9 +236,10 @@ const RegisterPage = () => {
                 {/* Nút đăng ký */}
                 <button
                   type="submit"
-                  className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors mt-2"
+                  disabled={loading}
+                  className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors mt-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  Đăng ký
+                  {loading ? 'Vui lòng đợi...' : 'Đăng ký'}
                 </button>
               </form>
 
