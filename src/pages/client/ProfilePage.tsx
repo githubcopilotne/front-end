@@ -1,4 +1,4 @@
-import { useNavigate, NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import {
     User as UserIcon,
     Package,
@@ -6,6 +6,7 @@ import {
     Lock,
     LogOut,
 } from 'lucide-react'
+import useAuthStore from '../../stores/authStore'
 
 const MENU_ITEMS: { to: string; label: string; icon: React.ReactNode }[] = [
     { to: 'thong-tin', label: 'Thông tin cá nhân', icon: <UserIcon size={20} /> },
@@ -15,13 +16,11 @@ const MENU_ITEMS: { to: string; label: string; icon: React.ReactNode }[] = [
 ]
 
 const ProfilePage = () => {
-    const navigate = useNavigate()
+    const { logout } = useAuthStore()
 
     const handleLogout = () => {
-        if (window.confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-            // TODO: Clear auth state
-            navigate('/')
-        }
+        logout()
+        window.location.href = '/'
     }
 
     return (
