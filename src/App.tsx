@@ -13,6 +13,7 @@ import ProfileSection from './components/profile/ProfileSection'
 import OrdersSection from './components/profile/OrdersSection'
 import WishlistSection from './components/profile/WishlistSection'
 import PasswordSection from './components/profile/PasswordSection'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
               <Route path="yeu-thich" element={<WishlistSection />} />
               <Route path="doi-mat-khau" element={<PasswordSection />} />
             </Route>
+
+            {/* 404 — route không tồn tại */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
 
