@@ -9,3 +9,8 @@ export interface VerifyOtpData {
     email: string
     otpCode: string
 }
+
+export interface LoginData {
+    email: string
+    password: string
+}

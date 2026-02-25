@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Search, Heart, ShoppingBag, CircleUserRound, Menu, X, ChevronDown } from 'lucide-react'
 import type { Category } from '../../types/category'
+import useAuthStore from '../../stores/authStore'
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isProductDropdownOpen, setIsProductDropdownOpen] = useState(false)
   const [openSection, setOpenSection] = useState<string | null>(null)
   const [categories, setCategories] = useState<Category[]>([])
+  const { user } = useAuthStore()
 
   useEffect(() => {
     fetch('/mocks/categories.json')
@@ -56,9 +58,8 @@ const Header = () => {
 
               {/* Dropdown */}
               <div
-                className={`absolute top-full left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-all duration-300 ease-in-out origin-top ${
-                  isProductDropdownOpen ? 'max-h-96 opacity-100 scale-y-100' : 'max-h-0 opacity-0 scale-y-0'
-                }`}
+                className={`absolute top-full left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-all duration-300 ease-in-out origin-top ${isProductDropdownOpen ? 'max-h-96 opacity-100 scale-y-100' : 'max-h-0 opacity-0 scale-y-0'
+                  }`}
               >
                 <div className="py-2">
                   {categories.map((category) => (
@@ -111,13 +112,20 @@ const Header = () => {
                 0
               </span>
             </button>
-            {/* Nút đăng nhập - Desktop */}
-            <Link to="/dang-nhap" className="hidden lg:flex items-center gap-2 bg-[#111111] text-white px-4 py-2 rounded-full font-medium hover:bg-gray-800 transition-colors">
-              <CircleUserRound size={20} className='mt-0.5' />
-              <span className="text-sm mt-0.5">Đăng nhập</span>
-            </Link>
-            {/* Nút đăng nhập - Tablet/Mobile */}
-            <Link to="/dang-nhap" className="lg:hidden p-2 text-gray-800 hover:text-[#111111] transition-colors">
+            {/* Nút đăng nhập / Tên user - Desktop */}
+            {user ? (
+              <Link to="/tai-khoan" className="hidden lg:flex items-center gap-2 bg-[#111111] text-white px-4 py-2 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                <CircleUserRound size={20} className='mt-0.5' />
+                <span className="text-sm mt-0.5">{user.fullName}</span>
+              </Link>
+            ) : (
+              <Link to="/dang-nhap" className="hidden lg:flex items-center gap-2 bg-[#111111] text-white px-4 py-2 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                <CircleUserRound size={20} className='mt-0.5' />
+                <span className="text-sm mt-0.5">Đăng nhập</span>
+              </Link>
+            )}
+            {/* Nút đăng nhập / Tên user - Tablet */}
+            <Link to={user ? '/tai-khoan' : '/dang-nhap'} className="lg:hidden p-2 text-gray-800 hover:text-[#111111] transition-colors">
               <CircleUserRound size={20} />
             </Link>
           </div>
@@ -133,7 +141,7 @@ const Header = () => {
             <button className="p-2 text-gray-800">
               <ShoppingBag size={20} />
             </button>
-            <Link to="/dang-nhap" className="p-2 text-gray-800">
+            <Link to={user ? '/tai-khoan' : '/dang-nhap'} className="p-2 text-gray-800">
               <CircleUserRound size={20} />
             </Link>
             <button
@@ -150,17 +158,15 @@ const Header = () => {
       <div className="md:hidden">
         {/* Overlay */}
         <div
-          className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${
-            isMobileMenuOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'
-          }`}
+          className={`fixed inset-0 bg-black transition-opacity duration-300 z-40 ${isMobileMenuOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'
+            }`}
           onClick={() => setIsMobileMenuOpen(false)}
         />
 
         {/* Menu Panel */}
         <div
-          className={`fixed top-0 right-0 h-full w-3/4 max-w-sm bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
-            isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+          className={`fixed top-0 right-0 h-full w-3/4 max-w-sm bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
         >
           {/* Close button */}
           <div className="flex justify-start p-4 border-b border-gray-200">
@@ -196,9 +202,8 @@ const Header = () => {
               </button>
 
               <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out origin-top ${
-                  openSection === 'product' ? 'max-h-60 opacity-100 scale-y-100' : 'max-h-0 opacity-0 scale-y-0'
-                }`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out origin-top ${openSection === 'product' ? 'max-h-60 opacity-100 scale-y-100' : 'max-h-0 opacity-0 scale-y-0'
+                  }`}
               >
                 <div className="pl-4 pb-2 space-y-2">
                   {categories.map((category) => (

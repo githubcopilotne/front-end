@@ -1,22 +1,68 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff } from 'lucide-react'
+import authService from '../../services/authService'
+import useAuthStore from '../../stores/authStore'
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+  const { login } = useAuthStore()
+
+  // ==================== STATE ====================
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
+  const [errors, setErrors] = useState<Record<string, string>>({}) // Lỗi validate từng field
+  const [apiError, setApiError] = useState('') // Lỗi từ BE
+  const [loading, setLoading] = useState(false) // Trạng thái đang gọi API
 
+  // ==================== HANDLERS ====================
+
+  // Cập nhật formData khi user nhập, xóa lỗi validate của field đó
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: '' })
+    }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Validate form, trả về true nếu hợp lệ
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email không được để trống'
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'Mật khẩu không được để trống'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  // Validate → gọi API login → lưu token + user vào store → về trang chủ
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Xử lý đăng nhập
-    console.log(formData)
+    setApiError('')
+
+    if (!validateForm()) return
+
+    setLoading(true)
+    try {
+      const result = await authService.login({
+        email: formData.email,
+        password: formData.password,
+      })
+      login(result.data.token, result.data.user)
+      navigate('/')
+    } catch (err: any) {
+      setApiError(err.response?.data?.message || 'Không thể kết nối server')
+    }
+    setLoading(false)
   }
 
   const handleGoogleLogin = () => {
@@ -24,10 +70,10 @@ const LoginPage = () => {
     console.log('Google login')
   }
 
+  // ==================== RENDER ====================
   return (
     <div className="min-h-[calc(100vh-64px-200px)] bg-gray-50 flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
-        {/* Card */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           {/* Header */}
           <div className="text-center mb-8">
@@ -39,7 +85,14 @@ const LoginPage = () => {
             </p>
           </div>
 
-          {/* Form */}
+          {/* Thông báo lỗi từ BE */}
+          {apiError && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-600 text-sm text-center">{apiError}</p>
+            </div>
+          )}
+
+          {/* Form đăng nhập */}
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email */}
             <div>
@@ -47,15 +100,17 @@ const LoginPage = () => {
                 Email
               </label>
               <input
-                type="email"
+                type="text"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="example@gmail.com"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all"
-                required
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
               />
+              <div className="h-5">
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+              </div>
             </div>
 
             {/* Mật khẩu */}
@@ -71,8 +126,7 @@ const LoginPage = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Nhập mật khẩu"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all pr-12"
-                  required
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all pr-12 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
                 />
                 <button
                   type="button"
@@ -81,6 +135,9 @@ const LoginPage = () => {
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
+              </div>
+              <div className="h-5">
+                {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
               </div>
             </div>
 
@@ -94,9 +151,10 @@ const LoginPage = () => {
             {/* Nút đăng nhập */}
             <button
               type="submit"
-              className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+              disabled={loading}
+              className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              Đăng nhập
+              {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
             </button>
           </form>
 

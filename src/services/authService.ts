@@ -1,5 +1,5 @@
 import api from './api'
-import type { RegisterData, VerifyOtpData } from '../types/auth'
+import type { RegisterData, VerifyOtpData, LoginData } from '../types/auth'
 
 const authService = {
     sendOtp: async (data: RegisterData) => {
@@ -9,6 +9,11 @@ const authService = {
 
     verifyOtp: async (data: VerifyOtpData) => {
         const res = await api.post('/auth/verify-otp', data)
+        return res.data
+    },
+
+    login: async (data: LoginData) => {
+        const res = await api.post('/auth/login', data)
         return res.data
     },
 }
