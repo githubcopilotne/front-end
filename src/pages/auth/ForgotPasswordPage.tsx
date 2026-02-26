@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
+import { ArrowLeft, Eye, EyeOff, Loader2 } from 'lucide-react'
 import OtpInput from '../../components/common/OtpInput'
 import authService from '../../services/authService'
 
@@ -174,7 +174,7 @@ const ForgotPasswordPage = () => {
                   disabled={loading}
                   className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Đang gửi...' : 'Gửi mã xác thực'}
+                  {loading ? <span className="flex items-center justify-center gap-2"><Loader2 size={20} className="animate-spin" />Đang gửi...</span> : 'Gửi mã xác thực'}
                 </button>
               </form>
             </>
@@ -205,7 +205,7 @@ const ForgotPasswordPage = () => {
                   disabled={otp.some(d => !d) || loading}
                   className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Đang xác thực...' : 'Xác nhận'}
+                  {loading ? <span className="flex items-center justify-center gap-2"><Loader2 size={20} className="animate-spin" />Đang xác thực...</span> : 'Xác nhận'}
                 </button>
 
                 <p className="text-center text-gray-600">
@@ -299,7 +299,7 @@ const ForgotPasswordPage = () => {
                   disabled={loading}
                   className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Đang xử lý...' : 'Đặt lại mật khẩu'}
+                  {loading ? <span className="flex items-center justify-center gap-2"><Loader2 size={20} className="animate-spin" />Đang xử lý...</span> : 'Đặt lại mật khẩu'}
                 </button>
               </form>
             </>

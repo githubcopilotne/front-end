@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { GoogleLogin } from '@react-oauth/google'
 import authService from '../../services/authService'
 import useAuthStore from '../../stores/authStore'
@@ -164,7 +164,7 @@ const LoginPage = () => {
               disabled={loading}
               className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+              {loading ? <span className="flex items-center justify-center gap-2"><Loader2 size={20} className="animate-spin" />Đang đăng nhập...</span> : 'Đăng nhập'}
             </button>
           </form>
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
+import { Eye, EyeOff, ArrowLeft, Loader2 } from 'lucide-react'
 import OtpInput from '../../components/common/OtpInput'
 import authService from '../../services/authService'
 
@@ -287,7 +287,7 @@ const RegisterPage = () => {
                   disabled={loading}
                   className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors mt-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Vui lòng đợi...' : 'Đăng ký'}
+                  {loading ? <span className="flex items-center justify-center gap-2"><Loader2 size={20} className="animate-spin" />Vui lòng đợi...</span> : 'Đăng ký'}
                 </button>
               </form>
 
@@ -345,7 +345,7 @@ const RegisterPage = () => {
                   disabled={otp.some(d => !d) || loading}
                   className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Đang xác minh...' : 'Xác minh'}
+                  {loading ? <span className="flex items-center justify-center gap-2"><Loader2 size={20} className="animate-spin" />Đang xác minh...</span> : 'Xác minh'}
                 </button>
 
                 {/* Nút gửi lại OTP — disable trong 60s đếm ngược */}
