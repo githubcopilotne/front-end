@@ -14,3 +14,7 @@ export interface LoginData {
     email: string
     password: string
 }
+
+export interface GoogleLoginData {
+    credential: string
+}

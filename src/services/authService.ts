@@ -1,5 +1,5 @@
 import api from './api'
-import type { RegisterData, VerifyOtpData, LoginData } from '../types/auth'
+import type { RegisterData, VerifyOtpData, LoginData, GoogleLoginData } from '../types/auth'
 
 const authService = {
     sendOtp: async (data: RegisterData) => {
@@ -14,6 +14,11 @@ const authService = {
 
     login: async (data: LoginData) => {
         const res = await api.post('/auth/login', data)
+        return res.data
+    },
+
+    googleLogin: async (data: GoogleLoginData) => {
+        const res = await api.post('/auth/google-login', data)
         return res.data
     },
 }
