@@ -18,3 +18,12 @@ export interface LoginData {
 export interface GoogleLoginData {
     credential: string
 }
+
+export interface ForgotPasswordData {
+    email: string
+}
+
+export interface ResetPasswordData {
+    resetToken: string
+    newPassword: string
+}

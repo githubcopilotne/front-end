@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
 import OtpInput from '../../components/common/OtpInput'
+import authService from '../../services/authService'
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate()
@@ -14,28 +15,104 @@ const ForgotPasswordPage = () => {
     password: '',
     confirmPassword: '',
   })
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [apiError, setApiError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [cooldown, setCooldown] = useState(0)
+  const [resetToken, setResetToken] = useState('')
 
-  const handleSendOtp = (e: React.FormEvent) => {
+  // Cooldown timer
+  useEffect(() => {
+    if (cooldown <= 0) return
+    const timer = setInterval(() => {
+      setCooldown((prev) => prev - 1)
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [cooldown])
+
+  // Step 1: Gửi OTP đến email
+  const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Gửi OTP đến email
-    console.log('Send OTP to:', email)
-    setStep(2)
+    setApiError('')
+
+    if (!email.trim()) {
+      setErrors({ email: 'Email không được để trống' })
+      return
+    }
+
+    setLoading(true)
+    try {
+      await authService.forgotPasswordSendOtp({ email })
+      setCooldown(60)
+      setStep(2)
+    } catch (err: any) {
+      setApiError(err.response?.data?.message || 'Không thể kết nối server')
+    }
+    setLoading(false)
   }
 
-  const handleVerifyOtp = (e: React.FormEvent) => {
+  // Step 2: Verify OTP → nhận reset token
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Xác thực OTP
-    const otpValue = otp.join('')
-    console.log('Verify OTP:', otpValue)
-    setStep(3)
+    setApiError('')
+
+    setLoading(true)
+    try {
+      const res = await authService.forgotPasswordVerifyOtp({
+        email,
+        otpCode: otp.join(''),
+      })
+      setResetToken(res.data.resetToken)
+      setStep(3)
+    } catch (err: any) {
+      setApiError(err.response?.data?.message || 'Không thể kết nối server')
+    }
+    setLoading(false)
   }
 
-  const handleResetPassword = (e: React.FormEvent) => {
+  // Step 3: Gửi reset token + password mới
+  const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Đặt lại mật khẩu
-    console.log('Reset password:', passwords)
-    // Sau khi thành công, chuyển về trang đăng nhập
-    navigate('/dang-nhap')
+    setApiError('')
+
+    // Validate
+    const newErrors: Record<string, string> = {}
+    if (!passwords.password) {
+      newErrors.password = 'Mật khẩu không được để trống'
+    } else if (passwords.password.length < 6) {
+      newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự'
+    }
+    if (passwords.password !== passwords.confirmPassword) {
+      newErrors.confirmPassword = 'Mật khẩu xác nhận không khớp'
+    }
+    setErrors(newErrors)
+    if (Object.keys(newErrors).length > 0) return
+
+    setLoading(true)
+    try {
+      await authService.resetPassword({
+        resetToken,
+        newPassword: passwords.password,
+      })
+      navigate('/dang-nhap')
+    } catch (err: any) {
+      setApiError(err.response?.data?.message || 'Không thể kết nối server')
+    }
+    setLoading(false)
+  }
+
+  // Gửi lại OTP
+  const handleResendOtp = async () => {
+    if (cooldown > 0) return
+    setApiError('')
+    setLoading(true)
+    try {
+      await authService.forgotPasswordSendOtp({ email })
+      setCooldown(60)
+    } catch (err: any) {
+      setApiError(err.response?.data?.message || 'Không thể kết nối server')
+    }
+    setLoading(false)
   }
 
   return (
@@ -51,6 +128,13 @@ const ForgotPasswordPage = () => {
             <ArrowLeft size={20} />
             <span>Quay lại</span>
           </Link>
+
+          {/* Thông báo lỗi từ BE */}
+          {apiError && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-600 text-sm text-center">{apiError}</p>
+            </div>
+          )}
 
           {/* Step 1: Nhập email */}
           {step === 1 && (
@@ -73,18 +157,24 @@ const ForgotPasswordPage = () => {
                     type="email"
                     id="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value)
+                      if (errors.email) setErrors({})
+                    }}
                     placeholder="example@gmail.com"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all"
-                    required
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
                   />
+                  <div className="h-5">
+                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                  </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+                  disabled={loading}
+                  className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  Gửi mã xác thực
+                  {loading ? 'Đang gửi...' : 'Gửi mã xác thực'}
                 </button>
               </form>
             </>
@@ -112,20 +202,21 @@ const ForgotPasswordPage = () => {
 
                 <button
                   type="submit"
-                  disabled={otp.some(d => !d)}
+                  disabled={otp.some(d => !d) || loading}
                   className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  Xác nhận
+                  {loading ? 'Đang xác thực...' : 'Xác nhận'}
                 </button>
 
                 <p className="text-center text-gray-600">
                   Không nhận được mã?{' '}
                   <button
                     type="button"
-                    onClick={() => console.log('Resend OTP')}
-                    className="text-[#111111] font-medium hover:underline"
+                    onClick={handleResendOtp}
+                    disabled={cooldown > 0 || loading}
+                    className="text-[#111111] font-medium hover:underline disabled:text-gray-400 disabled:no-underline disabled:cursor-not-allowed"
                   >
-                    Gửi lại
+                    {cooldown > 0 ? `Gửi lại (${cooldown}s)` : 'Gửi lại'}
                   </button>
                 </p>
               </form>
@@ -154,10 +245,12 @@ const ForgotPasswordPage = () => {
                       type={showPassword ? 'text' : 'password'}
                       id="password"
                       value={passwords.password}
-                      onChange={(e) => setPasswords({ ...passwords, password: e.target.value })}
+                      onChange={(e) => {
+                        setPasswords({ ...passwords, password: e.target.value })
+                        if (errors.password) setErrors({ ...errors, password: '' })
+                      }}
                       placeholder="Tối thiểu 6 ký tự"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all pr-12"
-                      required
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all pr-12 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     <button
                       type="button"
@@ -166,6 +259,9 @@ const ForgotPasswordPage = () => {
                     >
                       {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
+                  </div>
+                  <div className="h-5">
+                    {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                   </div>
                 </div>
 
@@ -178,10 +274,12 @@ const ForgotPasswordPage = () => {
                       type={showConfirmPassword ? 'text' : 'password'}
                       id="confirmPassword"
                       value={passwords.confirmPassword}
-                      onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })}
+                      onChange={(e) => {
+                        setPasswords({ ...passwords, confirmPassword: e.target.value })
+                        if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: '' })
+                      }}
                       placeholder="Nhập lại mật khẩu"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all pr-12"
-                      required
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#111111] focus:border-transparent outline-none transition-all pr-12 ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     <button
                       type="button"
@@ -191,13 +289,17 @@ const ForgotPasswordPage = () => {
                       {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
                   </div>
+                  <div className="h-5">
+                    {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
+                  </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+                  disabled={loading}
+                  className="w-full bg-[#111111] text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  Đặt lại mật khẩu
+                  {loading ? 'Đang xử lý...' : 'Đặt lại mật khẩu'}
                 </button>
               </form>
             </>
