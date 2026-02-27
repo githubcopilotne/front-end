@@ -5,6 +5,7 @@ import {
     Heart,
     Lock,
     LogOut,
+    LayoutDashboard,
 } from 'lucide-react'
 import useAuthStore from '../../stores/authStore'
 
@@ -16,7 +17,9 @@ const MENU_ITEMS: { to: string; label: string; icon: React.ReactNode }[] = [
 ]
 
 const ProfilePage = () => {
-    const { logout } = useAuthStore()
+    const { user, logout } = useAuthStore()
+
+    const isAdmin = user?.role === 'Admin'
 
     const handleLogout = () => {
         logout()
@@ -32,6 +35,20 @@ const ProfilePage = () => {
                     <aside className="hidden lg:block w-72 shrink-0">
                         <div className="bg-white rounded-lg overflow-hidden">
                             <nav className="p-2">
+                                {/* Nút Quản trị — chỉ hiện cho admin */}
+                                {isAdmin && (
+                                    <>
+                                        <button
+                                            className="admin-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left font-medium cursor-pointer"
+                                        >
+                                            <LayoutDashboard size={20} />
+                                            <span>Quản trị Admin</span>
+                                            <span className="admin-dot ml-auto rounded-full bg-current" style={{ width: 6, height: 6 }} />
+                                        </button>
+                                        <hr className="my-2 border-gray-200" />
+                                    </>
+                                )}
+
                                 {MENU_ITEMS.map((item) => (
                                     <NavLink
                                         key={item.to}
@@ -47,10 +64,11 @@ const ProfilePage = () => {
                                         <span className="font-medium">{item.label}</span>
                                     </NavLink>
                                 ))}
-                                {/* Logout button */}
+                                {/* Divider + Logout button */}
+                                <hr className="my-2 border-gray-200" />
                                 <button
                                     onClick={handleLogout}
-                                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors text-red-600 hover:bg-red-50 mt-2"
+                                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors text-red-600 hover:bg-red-50"
                                 >
                                     <LogOut size={20} />
                                     <span className="font-medium">Đăng xuất</span>
@@ -62,6 +80,20 @@ const ProfilePage = () => {
                     {/* Mobile tabs */}
                     <div className="lg:hidden overflow-x-auto scrollbar-hide">
                         <div className="flex gap-2 pb-2 min-w-max">
+                            {/* Nút Quản trị mobile — chỉ hiện cho admin */}
+                            {isAdmin && (
+                                <>
+                                    <button
+                                        className="admin-btn flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap text-sm font-medium cursor-pointer"
+                                    >
+                                        <LayoutDashboard size={20} />
+                                        Quản trị Admin
+                                        <span className="admin-dot rounded-full bg-current" style={{ width: 6, height: 6 }} />
+                                    </button>
+                                    <div className="w-px h-8 bg-gray-300 mx-1" />
+                                </>
+                            )}
+
                             {MENU_ITEMS.map((item) => (
                                 <NavLink
                                     key={item.to}
@@ -77,7 +109,8 @@ const ProfilePage = () => {
                                     {item.label}
                                 </NavLink>
                             ))}
-                            {/* Logout button */}
+                            {/* Divider + Logout button */}
+                            <div className="w-px h-8 bg-gray-300 mx-1" />
                             <button
                                 onClick={handleLogout}
                                 className="flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap text-sm font-medium transition-colors text-red-600 border border-red-200 hover:bg-red-50"
