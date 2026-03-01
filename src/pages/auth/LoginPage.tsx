@@ -177,20 +177,21 @@ const LoginPage = () => {
 
           {/* Google */}
           <div className="flex justify-center">
-            <GoogleLogin
-              onSuccess={(response) => {
-                if (response.credential) {
-                  handleGoogleLogin(response.credential)
-                }
-              }}
-              onError={() => {
-                setApiError('Đăng nhập Google thất bại')
-              }}
-              width="400"
-              logo_alignment="center"
-              size="large"
-              shape="pill"
-            />
+            <div className="w-full">
+              <GoogleLogin
+                onSuccess={(response) => {
+                  if (response.credential) {
+                    handleGoogleLogin(response.credential)
+                  }
+                }}
+                onError={() => {
+                  setApiError('Đăng nhập Google thất bại')
+                }}
+                logo_alignment="center"
+                size="large"
+                shape="pill"
+              />
+            </div>
           </div>
 
           {/* Link đăng ký */}
