@@ -105,13 +105,13 @@ const Header = () => {
             <button className="p-2 text-gray-800 hover:text-[#111111] transition-colors">
               <Heart size={20} />
             </button>
-            <button className="p-2 text-gray-800 hover:text-[#111111] transition-colors relative">
+            <Link to="/gio-hang" className="p-2 text-gray-800 hover:text-[#111111] transition-colors relative">
               <ShoppingBag size={20} />
               {/* Badge số lượng giỏ hàng */}
               <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                 0
               </span>
-            </button>
+            </Link>
             {/* Nút đăng nhập / Tên user - Desktop */}
             {user ? (
               <Link to="/tai-khoan" className="hidden lg:flex items-center gap-2 bg-[#111111] text-white px-4 py-2 rounded-full font-medium hover:bg-gray-800 transition-colors">
@@ -138,9 +138,9 @@ const Header = () => {
             <button className="p-2 text-gray-800">
               <Heart size={20} />
             </button>
-            <button className="p-2 text-gray-800">
+            <Link to="/gio-hang" className="p-2 text-gray-800">
               <ShoppingBag size={20} />
-            </button>
+            </Link>
             <Link to={user ? '/tai-khoan' : '/dang-nhap'} className="p-2 text-gray-800">
               <CircleUserRound size={20} />
             </Link>

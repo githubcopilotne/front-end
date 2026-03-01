@@ -13,6 +13,7 @@ import ProfileSection from './components/profile/ProfileSection'
 import OrdersSection from './components/profile/OrdersSection'
 import WishlistSection from './components/profile/WishlistSection'
 import PasswordSection from './components/profile/PasswordSection'
+import CartPage from './pages/client/CartPage'
 import DashboardPage from './pages/admin/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/san-pham" element={<ProductListPage />} />
           <Route path="/san-pham/:slug" element={<ProductDetailPage />} />
+          <Route path="/gio-hang" element={<CartPage />} />
 
           {/* Guest Route */}
           <Route path="/dang-nhap" element={<GuestRoute><LoginPage /></GuestRoute>} />
