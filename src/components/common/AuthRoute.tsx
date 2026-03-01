@@ -25,4 +25,20 @@ const GuestRoute = ({ children }: { children: React.ReactNode }) => {
     return children
 }
 
-export { ProtectedRoute, GuestRoute }
+// Chưa login hoặc không phải admin → chặn truy cập
+// Dùng cho: /admin/*
+const AdminRoute = ({ children }: { children: React.ReactNode }) => {
+    const { user } = useAuthStore()
+
+    if (!user) {
+        return <Navigate to="/dang-nhap" replace />
+    }
+
+    if (user.role !== 'Admin') {
+        return <Navigate to="/" replace />
+    }
+
+    return children
+}
+
+export { ProtectedRoute, GuestRoute, AdminRoute }
