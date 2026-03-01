@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, Link } from 'react-router-dom'
 import {
     User as UserIcon,
     Package,
@@ -38,13 +38,14 @@ const ProfilePage = () => {
                                 {/* Nút Quản trị — chỉ hiện cho admin */}
                                 {isAdmin && (
                                     <>
-                                        <button
+                                        <Link
+                                            to="/admin"
                                             className="admin-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left font-medium cursor-pointer"
                                         >
                                             <LayoutDashboard size={20} />
                                             <span>Quản trị Admin</span>
                                             <span className="admin-dot ml-auto rounded-full bg-current" style={{ width: 6, height: 6 }} />
-                                        </button>
+                                        </Link>
                                         <hr className="my-2 border-gray-200" />
                                     </>
                                 )}
@@ -83,13 +84,14 @@ const ProfilePage = () => {
                             {/* Nút Quản trị mobile — chỉ hiện cho admin */}
                             {isAdmin && (
                                 <>
-                                    <button
+                                    <Link
+                                        to="/admin"
                                         className="admin-btn flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap text-sm font-medium cursor-pointer"
                                     >
                                         <LayoutDashboard size={20} />
                                         Quản trị Admin
                                         <span className="admin-dot rounded-full bg-current" style={{ width: 6, height: 6 }} />
-                                    </button>
+                                    </Link>
                                     <div className="w-px h-8 bg-gray-300 mx-1" />
                                 </>
                             )}
