@@ -192,9 +192,12 @@ const CartPage = () => {
                             </div>
 
                             {/* Nút đặt hàng */}
-                            <button className="w-full mt-4 bg-[#111111] text-white py-4 rounded-lg font-medium hover:bg-gray-800 transition-colors">
+                            <Link
+                                to="/thanh-toan"
+                                className="block w-full mt-4 bg-[#111111] text-white py-4 rounded-lg font-medium hover:bg-gray-800 transition-colors text-center"
+                            >
                                 Tiến hành đặt hàng
-                            </button>
+                            </Link>
 
                             {/* Link tiếp tục mua sắm */}
                             <Link
