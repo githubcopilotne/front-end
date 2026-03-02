@@ -102,9 +102,9 @@ const Header = () => {
             <button className="p-2 text-gray-800 hover:text-[#111111] transition-colors">
               <Search size={20} />
             </button>
-            <button className="p-2 text-gray-800 hover:text-[#111111] transition-colors">
+            <Link to="/tai-khoan/yeu-thich" className="p-2 text-gray-800 hover:text-[#111111] transition-colors">
               <Heart size={20} />
-            </button>
+            </Link>
             <Link to="/gio-hang" className="p-2 text-gray-800 hover:text-[#111111] transition-colors relative">
               <ShoppingBag size={20} />
               {/* Badge số lượng giỏ hàng */}
@@ -135,9 +135,9 @@ const Header = () => {
             <button className="p-2 text-gray-800">
               <Search size={20} />
             </button>
-            <button className="p-2 text-gray-800">
+            <Link to="/tai-khoan/yeu-thich" className="p-2 text-gray-800">
               <Heart size={20} />
-            </button>
+            </Link>
             <Link to="/gio-hang" className="p-2 text-gray-800">
               <ShoppingBag size={20} />
             </Link>
