@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Minus, Plus, Trash2, ShoppingBag, Tag, X } from 'lucide-react'
+import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
 import type { CartItem } from '../../types/cart'
 import { formatPrice } from '../../utils/format'
 
 const CartPage = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([])
     const [isLoading, setIsLoading] = useState(true)
-    const [voucherCode, setVoucherCode] = useState('')
-    const [appliedVoucher, setAppliedVoucher] = useState<{ code: string; discount: number } | null>(null)
-    const [voucherError, setVoucherError] = useState('')
 
     // Fetch cart items (mock)
     useEffect(() => {
@@ -48,33 +45,9 @@ const CartPage = () => {
         setCartItems((prev) => prev.filter((item) => item.cart_item_id !== cartItemId))
     }
 
-    // Áp dụng voucher (mock)
-    const applyVoucher = () => {
-        const trimmedCode = voucherCode.trim().toUpperCase()
-        if (!trimmedCode) return
-
-        // Mock: chỉ chấp nhận mã "GIAM50K"
-        if (trimmedCode === 'GIAM50K') {
-            setAppliedVoucher({ code: trimmedCode, discount: 50000 })
-            setVoucherError('')
-            setVoucherCode('')
-        } else {
-            setVoucherError('Mã giảm giá không hợp lệ')
-            setAppliedVoucher(null)
-        }
-    }
-
-    // Hủy voucher
-    const removeVoucher = () => {
-        setAppliedVoucher(null)
-        setVoucherError('')
-    }
-
     // Tính tổng
     const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0)
     const subtotal = cartItems.reduce((sum, item) => sum + item.unit_price * item.quantity, 0)
-    const discount = appliedVoucher?.discount || 0
-    const total = Math.max(subtotal - discount, 0)
 
     // Loading
     if (isLoading) {
@@ -209,7 +182,7 @@ const CartPage = () => {
                     <div className="lg:w-[380px] flex-shrink-0">
                         <div className="bg-white rounded-lg p-6 lg:sticky lg:top-24">
                             <h2 className="text-lg font-bold text-gray-900 mb-6">
-                                Tóm tắt đơn hàng
+                                Thanh toán
                             </h2>
 
                             {/* Tổng tiền hàng */}
@@ -218,72 +191,8 @@ const CartPage = () => {
                                 <span className="font-medium">{formatPrice(subtotal)}</span>
                             </div>
 
-                            {/* Voucher */}
-                            <div className="mt-4">
-                                {appliedVoucher ? (
-                                    // Đã áp mã
-                                    <>
-                                        <div className="flex items-center justify-between text-green-600 mt-2">
-                                            <div className="flex items-center gap-2">
-                                                <Tag size={16} />
-                                                <span className="text-sm font-medium">{appliedVoucher.code}</span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="font-medium">-{formatPrice(appliedVoucher.discount)}</span>
-                                                <button
-                                                    onClick={removeVoucher}
-                                                    className="p-0.5 text-gray-400 hover:text-red-500 transition-colors"
-                                                    title="Hủy mã giảm giá"
-                                                >
-                                                    <X size={16} />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </>
-                                ) : (
-                                    // Chưa áp mã
-                                    <>
-                                        <div className="flex gap-2">
-                                            <input
-                                                type="text"
-                                                value={voucherCode}
-                                                onChange={(e) => {
-                                                    setVoucherCode(e.target.value)
-                                                    setVoucherError('')
-                                                }}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === 'Enter') applyVoucher()
-                                                }}
-                                                placeholder="Nhập mã giảm giá"
-                                                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#111111] transition-colors"
-                                            />
-                                            <button
-                                                onClick={applyVoucher}
-                                                className="px-4 py-2 bg-[#111111] text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
-                                            >
-                                                Áp dụng
-                                            </button>
-                                        </div>
-                                        {voucherError && (
-                                            <p className="text-red-500 text-sm mt-2">{voucherError}</p>
-                                        )}
-                                    </>
-                                )}
-                            </div>
-
-                            {/* Đường kẻ */}
-                            <div className="border-t border-gray-200 my-4"></div>
-
-                            {/* Tổng cộng */}
-                            <div className="flex justify-between items-center">
-                                <span className="text-lg font-bold text-gray-900">Tổng cộng</span>
-                                <span className="text-xl font-bold text-[#111111]">
-                                    {formatPrice(total)}
-                                </span>
-                            </div>
-
                             {/* Nút đặt hàng */}
-                            <button className="w-full mt-6 bg-[#111111] text-white py-4 rounded-lg font-medium hover:bg-gray-800 transition-colors">
+                            <button className="w-full mt-4 bg-[#111111] text-white py-4 rounded-lg font-medium hover:bg-gray-800 transition-colors">
                                 Tiến hành đặt hàng
                             </button>
 
