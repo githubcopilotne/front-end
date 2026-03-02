@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { CircleCheckBig } from 'lucide-react'
 import { formatPrice } from '../../utils/format'
+import confetti from 'canvas-confetti'
 
 // Mock data — khi có BE sẽ nhận từ checkout page qua state/params
 const mockOrder = {
@@ -17,6 +19,27 @@ const PAYMENT_METHODS: Record<number, string> = {
 
 const OrderSuccessPage = () => {
     const order = mockOrder
+
+    // Combo confetti: bắn 2 bên → mưa từ trên
+    useEffect(() => {
+        // Bắn từ 2 bên
+        confetti({ particleCount: 60, spread: 70, origin: { x: 0.2, y: 0.6 } })
+        confetti({ particleCount: 60, spread: 70, origin: { x: 0.8, y: 0.6 } })
+
+        // Mưa từ trên xuống sau 0.5s (cùng lúc)
+        setTimeout(() => {
+            [0.2, 0.4, 0.6, 0.8].forEach((x) => {
+                confetti({
+                    particleCount: 30,
+                    spread: 100,
+                    angle: -90,
+                    gravity: 0.8,
+                    origin: { x, y: 0 },
+                    startVelocity: 25,
+                })
+            })
+        }, 500)
+    }, [])
 
     return (
         <div className="bg-gray-50 min-h-screen">
