@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import { Search, Heart, ShoppingBag, CircleUserRound, Menu, X, ChevronDown } from 'lucide-react'
 import type { Category } from '../../types/category'
 import useAuthStore from '../../stores/authStore'
+import SearchDropdown from './SearchDropdown'
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isProductDropdownOpen, setIsProductDropdownOpen] = useState(false)
   const [openSection, setOpenSection] = useState<string | null>(null)
   const [categories, setCategories] = useState<Category[]>([])
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const { user } = useAuthStore()
 
   useEffect(() => {
@@ -99,7 +101,11 @@ const Header = () => {
 
           {/* Icons - Desktop */}
           <div className="hidden md:flex items-center space-x-4">
-            <button className="p-2 text-gray-800 hover:text-[#111111] transition-colors">
+            <button
+              className="p-2 text-gray-800 hover:text-[#111111] transition-colors"
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              data-search-toggle
+            >
               <Search size={20} />
             </button>
             <Link to="/tai-khoan/yeu-thich" className="p-2 text-gray-800 hover:text-[#111111] transition-colors">
@@ -132,7 +138,7 @@ const Header = () => {
 
           {/* Mobile - Icons & Hamburger */}
           <div className="flex md:hidden items-center space-x-2">
-            <button className="p-2 text-gray-800">
+            <button className="p-2 text-gray-800" onClick={() => setIsSearchOpen(!isSearchOpen)} data-search-toggle>
               <Search size={20} />
             </button>
             <Link to="/tai-khoan/yeu-thich" className="p-2 text-gray-800">
@@ -153,6 +159,9 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      {/* Search Dropdown */}
+      <SearchDropdown isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
       {/* Mobile Menu - Slide from right */}
       <div className="md:hidden">
