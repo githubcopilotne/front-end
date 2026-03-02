@@ -15,6 +15,7 @@ import WishlistSection from './components/profile/WishlistSection'
 import PasswordSection from './components/profile/PasswordSection'
 import CartPage from './pages/client/CartPage'
 import CheckoutPage from './pages/client/CheckoutPage'
+import OrderSuccessPage from './pages/client/OrderSuccessPage'
 import DashboardPage from './pages/admin/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -49,6 +50,7 @@ function App() {
 
           {/* Protected Route */}
           <Route path="/thanh-toan" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
+          <Route path="/dat-hang-thanh-cong" element={<ProtectedRoute><OrderSuccessPage /></ProtectedRoute>} />
           <Route path="/tai-khoan" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>}>
             <Route index element={<Navigate to="thong-tin" replace />} />
             <Route path="thong-tin" element={<ProfileSection />} />
