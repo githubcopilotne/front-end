@@ -16,6 +16,7 @@ import PasswordSection from './components/profile/PasswordSection'
 import CartPage from './pages/client/CartPage'
 import CheckoutPage from './pages/client/CheckoutPage'
 import OrderSuccessPage from './pages/client/OrderSuccessPage'
+import AboutPage from './pages/client/AboutPage'
 import DashboardPage from './pages/admin/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/san-pham" element={<ProductListPage />} />
           <Route path="/san-pham/:slug" element={<ProductDetailPage />} />
           <Route path="/gio-hang" element={<CartPage />} />
+          <Route path="/gioi-thieu" element={<AboutPage />} />
 
           {/* Guest Route */}
           <Route path="/dang-nhap" element={<GuestRoute><LoginPage /></GuestRoute>} />
