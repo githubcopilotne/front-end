@@ -1,5 +1,5 @@
 import apiJava from './apiJava'
-import type { CreateProductData } from '../types/product'
+import type { CreateProductData, UpdateProductData } from '../types/product'
 
 const productService = {
     // Lấy danh sách sản phẩm (có phân trang)
@@ -11,6 +11,30 @@ const productService = {
     // Tạo sản phẩm mới
     create: async (data: CreateProductData) => {
         const res = await apiJava.post('/products', data)
+        return res.data
+    },
+
+    // Lấy chi tiết sản phẩm
+    getById: async (id: number) => {
+        const res = await apiJava.get(`/products/${id}`)
+        return res.data
+    },
+
+    // Toggle ẩn/hiện sản phẩm
+    toggleStatus: async (id: number) => {
+        const res = await apiJava.patch(`/products/${id}/status`)
+        return res.data
+    },
+
+    // Xóa sản phẩm
+    deleteProduct: async (id: number) => {
+        const res = await apiJava.delete(`/products/${id}`)
+        return res.data
+    },
+
+    // Cập nhật thông tin sản phẩm
+    updateProduct: async (id: number, data: UpdateProductData) => {
+        const res = await apiJava.put(`/products/${id}`, data)
         return res.data
     },
 }

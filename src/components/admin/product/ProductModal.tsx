@@ -5,13 +5,16 @@ import categoryService from '../../../services/categoryService'
 import type { CategoryListItem } from '../../../types/category'
 import toast from 'react-hot-toast'
 
-interface ProductCreateModalProps {
+interface ProductModalProps {
     isOpen: boolean
     onClose: () => void
+    product?: any           // null/undefined = tạo mới, có data = sửa
+    onEditSuccess?: () => void   // callback khi sửa thành công (reload data)
 }
 
-const ProductCreateModal = ({ isOpen, onClose }: ProductCreateModalProps) => {
+const ProductModal = ({ isOpen, onClose, product, onEditSuccess }: ProductModalProps) => {
     const navigate = useNavigate()
+    const isEdit = !!product
 
     // Form state
     const [productName, setProductName] = useState('')
@@ -39,19 +42,29 @@ const ProductCreateModal = ({ isOpen, onClose }: ProductCreateModalProps) => {
         }
     }, [isOpen])
 
-    // Lấy danh sách danh mục + reset form khi mở modal
+    // Fill form khi mở modal
     useEffect(() => {
         if (!isOpen) return
 
-        // Reset form
-        setProductName('')
-        setCategoryId('')
-        setUnitPrice('')
-        setDescription('')
+        // Reset error
         setApiError('')
         setNameError('')
         setCategoryError('')
         setPriceError('')
+
+        if (isEdit) {
+            // Mode sửa — fill data sẵn
+            setProductName(product.productName || '')
+            setCategoryId(product.category?.categoryId || product.categoryId || '')
+            setUnitPrice(String(product.unitPrice || ''))
+            setDescription(product.description || '')
+        } else {
+            // Mode tạo — reset form
+            setProductName('')
+            setCategoryId('')
+            setUnitPrice('')
+            setDescription('')
+        }
 
         // Lấy danh mục
         const fetchCategories = async () => {
@@ -62,7 +75,6 @@ const ProductCreateModal = ({ isOpen, onClose }: ProductCreateModalProps) => {
                     setCategories(res.data.filter((c: CategoryListItem) => c.status === 1))
                 }
             } catch {
-                // Nếu lỗi thì dropdown rỗng
                 setCategories([])
             }
         }
@@ -110,22 +122,35 @@ const ProductCreateModal = ({ isOpen, onClose }: ProductCreateModalProps) => {
             setLoading(true)
             setApiError('')
 
-            const res = await productService.create({
+            const data = {
                 productName: trimmedName,
                 categoryId: Number(categoryId),
                 unitPrice: price,
                 description: description.trim() || undefined,
-            })
+            }
 
-            if (res.success) {
-                toast.success('Tạo sản phẩm thành công')
-                handleClose()
-                // Chờ modal đóng xong rồi redirect
-                setTimeout(() => {
-                    navigate(`/admin/san-pham/${res.data.productId}`)
-                }, 250)
+            if (isEdit) {
+                // Mode sửa
+                const res = await productService.updateProduct(product.productId, data)
+                if (res.success) {
+                    toast.success('Cập nhật sản phẩm thành công')
+                    handleClose()
+                    onEditSuccess?.()
+                } else {
+                    setApiError(res.message)
+                }
             } else {
-                setApiError(res.message)
+                // Mode tạo
+                const res = await productService.create(data)
+                if (res.success) {
+                    toast.success('Tạo sản phẩm thành công')
+                    handleClose()
+                    setTimeout(() => {
+                        navigate(`/admin/san-pham/${res.data.productId}`)
+                    }, 250)
+                } else {
+                    setApiError(res.message)
+                }
             }
         } catch (err: any) {
             setApiError(err.response?.data?.message || 'Không thể kết nối server')
@@ -146,7 +171,9 @@ const ProductCreateModal = ({ isOpen, onClose }: ProductCreateModalProps) => {
 
             {/* Modal */}
             <div className={`relative bg-white rounded-lg shadow-xl w-full max-w-md mx-4 p-6 transition-all duration-200 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">Thêm sản phẩm</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    {isEdit ? 'Sửa sản phẩm' : 'Thêm sản phẩm'}
+                </h3>
 
                 {/* Tên sản phẩm */}
                 <div className="mb-4">
@@ -239,7 +266,7 @@ const ProductCreateModal = ({ isOpen, onClose }: ProductCreateModalProps) => {
                         disabled={loading}
                         className="px-4 py-2 text-sm font-medium text-white bg-[#409EFF] rounded-lg hover:bg-[#3a8ee6] transition-colors cursor-pointer disabled:opacity-50"
                     >
-                        {loading ? 'Đang lưu...' : 'Lưu & Tiếp tục'}
+                        {loading ? 'Đang lưu...' : isEdit ? 'Cập nhật' : 'Lưu & Tiếp tục'}
                     </button>
                 </div>
             </div>
@@ -247,4 +274,4 @@ const ProductCreateModal = ({ isOpen, onClose }: ProductCreateModalProps) => {
     )
 }
 
-export default ProductCreateModal
+export default ProductModal

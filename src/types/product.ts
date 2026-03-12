@@ -64,3 +64,11 @@ export interface CreateProductData {
   unitPrice: number
   description?: string
 }
+
+// Dùng cho form sửa sản phẩm (PUT /products/:id)
+export interface UpdateProductData {
+  productName: string
+  categoryId: number
+  unitPrice: number
+  description?: string
+}

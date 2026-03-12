@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Eye } from 'lucide-react'
 import productService from '../../services/productService'
 import type { ProductListItem } from '../../types/product'
 import { formatPrice, formatDate } from '../../utils/format'
 import Pagination from '../../components/ui/Pagination'
 import StatusBadge from '../../components/ui/StatusBadge'
-import ProductCreateModal from '../../components/admin/product/ProductCreateModal'
+import ProductModal from '../../components/admin/product/ProductModal'
 
 const ProductPage = () => {
     const [products, setProducts] = useState<ProductListItem[]>([])
@@ -123,12 +124,13 @@ const ProductPage = () => {
                                     </td>
                                     <td className="px-4 py-3 text-sm text-gray-500">{formatDate(p.createdAt)}</td>
                                     <td className="px-4 py-3">
-                                        <button
-                                            className="p-1.5 text-gray-400 hover:text-[#409EFF] hover:bg-blue-50 rounded transition-colors cursor-pointer"
+                                        <Link
+                                            to={`/admin/san-pham/${p.productId}`}
+                                            className="p-1.5 text-gray-400 hover:text-[#409EFF] hover:bg-blue-50 rounded transition-colors"
                                             title="Xem chi tiết"
                                         >
                                             <Eye size={16} />
-                                        </button>
+                                        </Link>
                                     </td>
                                 </tr>
                             ))
@@ -145,7 +147,7 @@ const ProductPage = () => {
             />
 
             {/* Modal thêm sản phẩm */}
-            <ProductCreateModal
+            <ProductModal
                 isOpen={showCreateModal}
                 onClose={() => setShowCreateModal(false)}
             />

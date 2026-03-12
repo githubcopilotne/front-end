@@ -22,6 +22,7 @@ import ContactPage from './pages/client/ContactPage'
 import DashboardPage from './pages/admin/DashboardPage'
 import CategoryPage from './pages/admin/CategoryPage'
 import ProductPage from './pages/admin/ProductPage'
+import AdminProductDetail from './pages/admin/AdminProductDetail'
 import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path="nhan-vien" element={<div>Nhân viên - đang phát triển...</div>} />
           <Route path="danh-muc" element={<CategoryPage />} />
           <Route path="san-pham" element={<ProductPage />} />
+          <Route path="san-pham/:id" element={<AdminProductDetail />} />
           <Route path="don-hang" element={<div>Đơn hàng - đang phát triển...</div>} />
           <Route path="voucher" element={<div>Voucher - đang phát triển...</div>} />
           <Route path="danh-gia" element={<div>Đánh giá - đang phát triển...</div>} />
