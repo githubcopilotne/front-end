@@ -42,3 +42,17 @@ export interface ProductDetail {
   variants: ProductVariant[]
   reviews: ProductReview[]
 }
+
+// ======= Types cho admin (Java BE — camelCase) =======
+
+// Dùng cho bảng danh sách sản phẩm (GET /products?page=&size=)
+export interface ProductListItem {
+  productId: number
+  productName: string
+  unitPrice: number
+  categoryName: string
+  mainImageUrl: string
+  totalStock: number
+  status: number           // 0 = ẩn, 1 = hiện
+  createdAt: string
+}
