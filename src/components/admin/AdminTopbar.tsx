@@ -40,7 +40,7 @@ const AdminTopbar = ({ onToggleSidebar }: AdminTopbarProps) => {
                 >
                     <Menu size={24} />
                 </button>
-                <h1 className="text-lg font-semibold text-gray-800">{pageTitle}</h1>
+                <h1 className="text-base sm:text-lg font-semibold text-gray-800 truncate">{pageTitle}</h1>
             </div>
 
             {/* Right section */}
