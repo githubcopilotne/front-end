@@ -55,6 +55,31 @@ const productService = {
         const res = await apiJava.delete(`/products/${productId}/variants/${variantId}`)
         return res.data
     },
+
+    // Upload ảnh sản phẩm (multipart/form-data)
+    addImages: async (productId: number, files: File[], mainIndex?: number) => {
+        const formData = new FormData()
+        files.forEach(file => formData.append('files', file))
+        if (mainIndex !== undefined) {
+            formData.append('mainIndex', String(mainIndex))
+        }
+        const res = await apiJava.post(`/products/${productId}/images`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        })
+        return res.data
+    },
+
+    // Đổi ảnh chính
+    setMainImage: async (productId: number, imageId: number) => {
+        const res = await apiJava.patch(`/products/${productId}/images/${imageId}`)
+        return res.data
+    },
+
+    // Xóa ảnh
+    deleteImage: async (productId: number, imageId: number) => {
+        const res = await apiJava.delete(`/products/${productId}/images/${imageId}`)
+        return res.data
+    },
 }
 
 export default productService
