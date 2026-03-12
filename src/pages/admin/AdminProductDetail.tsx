@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import productService from '../../services/productService'
 import ProductInfoSection from '../../components/admin/product/ProductInfoSection'
+import ProductVariantSection from '../../components/admin/product/ProductVariantSection'
 
 const AdminProductDetail = () => {
     const { id } = useParams<{ id: string }>()
@@ -65,11 +66,8 @@ const AdminProductDetail = () => {
             {/* Section 1: Thông tin chung */}
             <ProductInfoSection product={product} onRefresh={fetchProduct} />
 
-            {/* Section 2: Biến thể (placeholder) */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-                <h3 className="text-base font-semibold text-gray-800 mb-4">Biến thể</h3>
-                <p className="text-sm text-gray-400 italic">Chức năng quản lý biến thể — đang phát triển...</p>
-            </div>
+            {/* Section 2: Biến thể */}
+            <ProductVariantSection product={product} onRefresh={fetchProduct} />
 
             {/* Section 3: Hình ảnh (placeholder) */}
             <div className="bg-white rounded-lg border border-gray-200 p-6">

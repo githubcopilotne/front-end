@@ -37,6 +37,24 @@ const productService = {
         const res = await apiJava.put(`/products/${id}`, data)
         return res.data
     },
+
+    // Thêm biến thể (gửi array)
+    addVariants: async (productId: number, variants: { color: string; size: string; stockQuantity: number }[]) => {
+        const res = await apiJava.post(`/products/${productId}/variants`, variants)
+        return res.data
+    },
+
+    // Cập nhật tồn kho biến thể
+    updateVariantStock: async (productId: number, variantId: number, data: { mode: string; quantity: number }) => {
+        const res = await apiJava.patch(`/products/${productId}/variants/${variantId}`, data)
+        return res.data
+    },
+
+    // Xóa biến thể
+    deleteVariant: async (productId: number, variantId: number) => {
+        const res = await apiJava.delete(`/products/${productId}/variants/${variantId}`)
+        return res.data
+    },
 }
 
 export default productService
