@@ -56,3 +56,11 @@ export interface ProductListItem {
   status: number           // 0 = ẩn, 1 = hiện
   createdAt: string
 }
+
+// Dùng cho form thêm sản phẩm (POST /products)
+export interface CreateProductData {
+  productName: string
+  categoryId: number
+  unitPrice: number
+  description?: string
+}

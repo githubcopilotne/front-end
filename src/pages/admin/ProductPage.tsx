@@ -5,6 +5,7 @@ import type { ProductListItem } from '../../types/product'
 import { formatPrice, formatDate } from '../../utils/format'
 import Pagination from '../../components/ui/Pagination'
 import StatusBadge from '../../components/ui/StatusBadge'
+import ProductCreateModal from '../../components/admin/product/ProductCreateModal'
 
 const ProductPage = () => {
     const [products, setProducts] = useState<ProductListItem[]>([])
@@ -15,6 +16,9 @@ const ProductPage = () => {
     const [currentPage, setCurrentPage] = useState(0)
     const [totalPages, setTotalPages] = useState(0)
     const pageSize = 10
+
+    // Modal thêm sản phẩm
+    const [showCreateModal, setShowCreateModal] = useState(false)
 
     // Lấy danh sách sản phẩm
     const fetchProducts = async (page = currentPage) => {
@@ -46,6 +50,7 @@ const ProductPage = () => {
             <div className="flex items-center justify-between mb-4">
                 <div />
                 <button
+                    onClick={() => setShowCreateModal(true)}
                     className="flex items-center gap-2 px-4 py-2 bg-[#409EFF] text-white text-sm font-medium rounded-lg hover:bg-[#3a8ee6] transition-colors cursor-pointer"
                 >
                     + Thêm sản phẩm
@@ -137,6 +142,12 @@ const ProductPage = () => {
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={fetchProducts}
+            />
+
+            {/* Modal thêm sản phẩm */}
+            <ProductCreateModal
+                isOpen={showCreateModal}
+                onClose={() => setShowCreateModal(false)}
             />
         </div>
     )
