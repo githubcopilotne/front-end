@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import categoryService from '../../../services/categoryService'
 import type { CategoryListItem } from '../../../types/category'
+import toast from 'react-hot-toast'
 
 interface CategoryDeleteDialogProps {
     isOpen: boolean
@@ -12,12 +13,23 @@ interface CategoryDeleteDialogProps {
 const CategoryDeleteDialog = ({ isOpen, category, onClose, onSuccess }: CategoryDeleteDialogProps) => {
     const [loading, setLoading] = useState(false)
     const [apiError, setApiError] = useState('')
+    const [visible, setVisible] = useState(false)
+
+    // Animation: mở dialog
+    useEffect(() => {
+        if (isOpen && category) {
+            requestAnimationFrame(() => setVisible(true))
+        } else {
+            setVisible(false)
+        }
+    }, [isOpen, category])
 
     if (!isOpen || !category) return null
 
     const handleClose = () => {
         setApiError('')
-        onClose()
+        setVisible(false)
+        setTimeout(onClose, 200)
     }
 
     const handleDelete = async () => {
@@ -27,6 +39,7 @@ const CategoryDeleteDialog = ({ isOpen, category, onClose, onSuccess }: Category
             const res = await categoryService.delete(category.categoryId)
 
             if (res.success) {
+                toast.success('Xóa danh mục thành công')
                 onSuccess()
                 handleClose()
             } else {
@@ -41,11 +54,14 @@ const CategoryDeleteDialog = ({ isOpen, category, onClose, onSuccess }: Category
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black/50" onClick={handleClose} />
+            {/* Overlay — fade in/out */}
+            <div
+                className={`absolute inset-0 bg-black transition-opacity duration-200 ${visible ? 'opacity-50' : 'opacity-0'}`}
+                onClick={handleClose}
+            />
 
-            {/* Dialog */}
-            <div className="relative bg-white rounded-lg shadow-lg w-full max-w-sm mx-4 p-6">
+            {/* Dialog — fade + scale */}
+            <div className={`relative bg-white rounded-lg shadow-xl w-full max-w-sm mx-4 p-6 transition-all duration-200 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">Xác nhận xóa</h3>
 
                 <p className="text-sm text-gray-600 mb-4">

@@ -97,7 +97,7 @@ const CategoryPage = () => {
                                 <tr key={cat.categoryId} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                                     <td className="px-4 py-3 text-sm text-gray-500">{index + 1}</td>
                                     <td className="px-4 py-3 text-sm font-medium text-gray-800">{cat.categoryName}</td>
-                                    <td className="px-4 py-3 text-sm text-gray-500">
+                                    <td className="px-4 py-3 text-sm text-gray-500 max-w-[200px] truncate">
                                         {cat.description || <span className="text-gray-300 italic">Không có mô tả</span>}
                                     </td>
                                     <td className="px-4 py-3">

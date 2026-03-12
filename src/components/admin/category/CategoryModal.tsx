@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import categoryService from '../../../services/categoryService'
 import type { CategoryListItem } from '../../../types/category'
+import toast from 'react-hot-toast'
 
 interface CategoryModalProps {
     isOpen: boolean
@@ -16,10 +17,21 @@ const CategoryModal = ({ isOpen, category, onClose, onSuccess }: CategoryModalPr
     const [loading, setLoading] = useState(false)
     const [apiError, setApiError] = useState('')
     const [nameError, setNameError] = useState('')
+    const [visible, setVisible] = useState(false)
 
     const isEdit = category !== null
 
-    // Khi mở modal → fill form từ data có sẵn (sửa) hoặc reset (thêm)
+    // Animation: mở modal
+    useEffect(() => {
+        if (isOpen) {
+            // Delay nhỏ để trigger CSS transition (mount → animate in)
+            requestAnimationFrame(() => setVisible(true))
+        } else {
+            setVisible(false)
+        }
+    }, [isOpen])
+
+    // Fill form khi mở modal
     useEffect(() => {
         if (!isOpen) return
 
@@ -40,7 +52,9 @@ const CategoryModal = ({ isOpen, category, onClose, onSuccess }: CategoryModalPr
     const handleClose = () => {
         setApiError('')
         setNameError('')
-        onClose()
+        // Animate out trước → rồi mới đóng
+        setVisible(false)
+        setTimeout(onClose, 200)
     }
 
     const handleSubmit = async () => {
@@ -73,6 +87,7 @@ const CategoryModal = ({ isOpen, category, onClose, onSuccess }: CategoryModalPr
             }
 
             if (res.success) {
+                toast.success(isEdit ? 'Cập nhật danh mục thành công' : 'Tạo danh mục thành công')
                 onSuccess()
                 handleClose()
             } else {
@@ -89,11 +104,14 @@ const CategoryModal = ({ isOpen, category, onClose, onSuccess }: CategoryModalPr
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black/50" onClick={handleClose} />
+            {/* Overlay — fade in/out */}
+            <div
+                className={`absolute inset-0 bg-black transition-opacity duration-200 ${visible ? 'opacity-50' : 'opacity-0'}`}
+                onClick={handleClose}
+            />
 
-            {/* Modal */}
-            <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md mx-4 p-6">
+            {/* Modal — fade + scale */}
+            <div className={`relative bg-white rounded-lg shadow-xl w-full max-w-md mx-4 p-6 transition-all duration-200 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">
                     {isEdit ? 'Sửa danh mục' : 'Thêm danh mục'}
                 </h3>
