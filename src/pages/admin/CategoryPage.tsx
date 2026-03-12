@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Plus, Pencil, Trash2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, Eye } from 'lucide-react'
 import categoryService from '../../services/categoryService'
 import type { CategoryListItem } from '../../types/category'
 import { formatDate } from '../../utils/format'
 import CategoryDeleteDialog from '../../components/admin/category/CategoryDeleteDialog'
 import CategoryModal from '../../components/admin/category/CategoryModal'
+import CategoryDetailModal from '../../components/admin/category/CategoryDetailModal'
 
 const CategoryPage = () => {
     const [categories, setCategories] = useState<CategoryListItem[]>([])
@@ -18,6 +19,10 @@ const CategoryPage = () => {
     // State cho modal thêm/sửa
     const [showModal, setShowModal] = useState(false)
     const [editingCategory, setEditingCategory] = useState<CategoryListItem | null>(null)
+
+    // State cho modal chi tiết
+    const [showDetailModal, setShowDetailModal] = useState(false)
+    const [detailCategoryId, setDetailCategoryId] = useState<number | null>(null)
 
     // Lấy danh sách danh mục khi vào trang
     const fetchCategories = async () => {
@@ -118,6 +123,16 @@ const CategoryPage = () => {
                                         <div className="flex items-center gap-2">
                                             <button
                                                 onClick={() => {
+                                                    setDetailCategoryId(cat.categoryId)
+                                                    setShowDetailModal(true)
+                                                }}
+                                                className="p-1.5 text-gray-400 hover:text-[#409EFF] hover:bg-blue-50 rounded transition-colors cursor-pointer"
+                                                title="Xem chi tiết"
+                                            >
+                                                <Eye size={16} />
+                                            </button>
+                                            <button
+                                                onClick={() => {
                                                     setEditingCategory(cat)
                                                     setShowModal(true)
                                                 }}
@@ -159,6 +174,13 @@ const CategoryPage = () => {
                 category={editingCategory}
                 onClose={() => setShowModal(false)}
                 onSuccess={fetchCategories}
+            />
+
+            {/* Modal chi tiết */}
+            <CategoryDetailModal
+                isOpen={showDetailModal}
+                categoryId={detailCategoryId}
+                onClose={() => setShowDetailModal(false)}
             />
         </div>
     )
