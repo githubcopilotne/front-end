@@ -1,0 +1,74 @@
+[
+  {
+    "product_id": 9,
+    "product_name": "Áo hoodie oversize",
+    "slug": "ao-hoodie-oversize-9",
+    "unit_price": 520000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/hades0013_large_dcbce9d6cdad491a87ea3e3f39b278f1_large.jpeg",
+    "rating": 4.6,
+    "review_count": 32
+  },
+  {
+    "product_id": 10,
+    "product_name": "Quần jogger thể thao",
+    "slug": "quan-jogger-the-thao-10",
+    "unit_price": 380000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/kkk_6fae522ad49a48d5ad05f6444086c807_large.png",
+    "rating": 4.4,
+    "review_count": 18
+  },
+  {
+    "product_id": 11,
+    "product_name": "Áo croptop nữ",
+    "slug": "ao-croptop-nu-11",
+    "unit_price": 220000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/hades0131_large_8ab52169b1c5483d95016eef09105191_large.jpeg",
+    "rating": 4.7,
+    "review_count": 45
+  },
+  {
+    "product_id": 12,
+    "product_name": "Blazer công sở",
+    "slug": "blazer-cong-so-12",
+    "unit_price": 750000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/insane0585_large_b3b9cb2eb0924610975bb4acde962e49_large.jpeg",
+    "rating": 4.8,
+    "review_count": 27
+  },
+  {
+    "product_id": 13,
+    "product_name": "Áo len cổ lọ",
+    "slug": "ao-len-co-lo-13",
+    "unit_price": 420000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/hades0075_large_150f7743a8f64f529c9e312c3364bcc9_large.jpeg",
+    "rating": 4.5,
+    "review_count": 21
+  },
+  {
+    "product_id": 14,
+    "product_name": "Quần short kaki",
+    "slug": "quan-short-kaki-14",
+    "unit_price": 290000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/270126hades3808_c7d31406111346ac8cd25c5c557d4baa_large.jpg",
+    "rating": 4.3,
+    "review_count": 15
+  },
+  {
+    "product_id": 15,
+    "product_name": "Đầm wrap dress",
+    "slug": "dam-wrap-dress-15",
+    "unit_price": 580000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/og_1_5f83b91d713046f188480ff1bcd37b52_large.png",
+    "rating": 4.9,
+    "review_count": 38
+  },
+  {
+    "product_id": 16,
+    "product_name": "Áo tank top gym",
+    "slug": "ao-tank-top-gym-16",
+    "unit_price": 180000,
+    "image_url": "https://cdn.hstatic.net/products/1000306633/hades4314_703fd92a94564ccf8d950a99b4397d6f_large.jpg",
+    "rating": 4.2,
+    "review_count": 12
+  }
+]

@@ -1,0 +1,6 @@
+[
+  { "category_id": 1, "category_name": "Áo", "slug": "ao" },
+  { "category_id": 2, "category_name": "Quần", "slug": "quan" },
+  { "category_id": 3, "category_name": "Váy", "slug": "vay" },
+  { "category_id": 4, "category_name": "Phụ kiện", "slug": "phu-kien" }
+]
