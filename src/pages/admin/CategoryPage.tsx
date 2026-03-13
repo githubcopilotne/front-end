@@ -6,6 +6,7 @@ import { formatDate } from '../../utils/format'
 import CategoryDeleteDialog from '../../components/admin/category/CategoryDeleteDialog'
 import CategoryModal from '../../components/admin/category/CategoryModal'
 import CategoryDetailModal from '../../components/admin/category/CategoryDetailModal'
+import StatusBadge from '../../components/ui/StatusBadge'
 
 const CategoryPage = () => {
     const [categories, setCategories] = useState<CategoryListItem[]>([])
@@ -106,17 +107,7 @@ const CategoryPage = () => {
                                         {cat.description || <span className="text-gray-300 italic">Không có mô tả</span>}
                                     </td>
                                     <td className="px-4 py-3">
-                                        {cat.status === 1 ? (
-                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-green-50 text-green-600">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                                                Hiện
-                                            </span>
-                                        ) : (
-                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-red-50 text-red-500">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                                                Ẩn
-                                            </span>
-                                        )}
+                                        <StatusBadge status={cat.status} />
                                     </td>
                                     <td className="px-4 py-3 text-sm text-gray-500">{formatDate(cat.createdAt)}</td>
                                     <td className="px-4 py-3">
