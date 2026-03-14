@@ -9,15 +9,16 @@ import {
     Ticket,
     Star,
 } from 'lucide-react'
+import useAuthStore from '../../stores/authStore'
 
 const ADMIN_MENU = [
     { to: '/admin/tong-quan', label: 'Tổng quan', icon: <LayoutDashboard size={20} /> },
     { to: '/admin/khach-hang', label: 'Khách hàng', icon: <Users size={20} /> },
-    { to: '/admin/nhan-vien', label: 'Nhân viên', icon: <UserCog size={20} /> },
-    { to: '/admin/danh-muc', label: 'Danh mục', icon: <FolderOpen size={20} /> },
+    { to: '/admin/nhan-vien', label: 'Nhân viên', icon: <UserCog size={20} />, adminOnly: true },
+    { to: '/admin/danh-muc', label: 'Danh mục', icon: <FolderOpen size={20} />, adminOnly: true },
     { to: '/admin/san-pham', label: 'Sản phẩm', icon: <ShoppingBag size={20} /> },
     { to: '/admin/don-hang', label: 'Đơn hàng', icon: <Package size={20} /> },
-    { to: '/admin/voucher', label: 'Voucher', icon: <Ticket size={20} /> },
+    { to: '/admin/voucher', label: 'Voucher', icon: <Ticket size={20} />, adminOnly: true },
     { to: '/admin/danh-gia', label: 'Đánh giá', icon: <Star size={20} /> },
 ]
 
@@ -27,6 +28,11 @@ interface AdminSidebarProps {
 }
 
 const AdminSidebar = ({ isOpen, onClose }: AdminSidebarProps) => {
+    const user = useAuthStore(state => state.user)
+    const isAdmin = user?.role === 'Admin'
+
+    const menuItems = ADMIN_MENU.filter(item => !item.adminOnly || isAdmin)
+
     return (
         <>
             {/* Overlay — mobile only */}
@@ -49,7 +55,7 @@ const AdminSidebar = ({ isOpen, onClose }: AdminSidebarProps) => {
 
                 {/* Menu */}
                 <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
-                    {ADMIN_MENU.map((item) => (
+                    {menuItems.map((item) => (
                         <NavLink
                             key={item.to}
                             to={item.to}

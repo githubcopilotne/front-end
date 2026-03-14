@@ -25,7 +25,7 @@ const GuestRoute = ({ children }: { children: React.ReactNode }) => {
     return children
 }
 
-// Chưa login hoặc không phải admin → chặn truy cập
+// Chưa login hoặc không phải admin/staff → chặn truy cập
 // Dùng cho: /admin/*
 const AdminRoute = ({ children }: { children: React.ReactNode }) => {
     const { user } = useAuthStore()
@@ -34,11 +34,23 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => {
         return <Navigate to="/dang-nhap" replace />
     }
 
-    if (user.role !== 'Admin') {
+    if (user.role !== 'Admin' && user.role !== 'Staff') {
         return <Navigate to="/" replace />
     }
 
     return children
 }
 
-export { ProtectedRoute, GuestRoute, AdminRoute }
+// Chỉ Admin mới truy cập được (Staff bị chặn)
+// Dùng cho: /admin/nhan-vien, /admin/voucher
+const AdminOnlyRoute = ({ children }: { children: React.ReactNode }) => {
+    const { user } = useAuthStore()
+
+    if (!user || user.role !== 'Admin') {
+        return <Navigate to="/admin/tong-quan" replace />
+    }
+
+    return children
+}
+
+export { ProtectedRoute, GuestRoute, AdminRoute, AdminOnlyRoute }

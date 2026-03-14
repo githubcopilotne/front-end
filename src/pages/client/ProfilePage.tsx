@@ -19,7 +19,7 @@ const MENU_ITEMS: { to: string; label: string; icon: React.ReactNode }[] = [
 const ProfilePage = () => {
     const { user, logout } = useAuthStore()
 
-    const isAdmin = user?.role === 'Admin'
+    const isAdminOrStaff = user?.role === 'Admin' || user?.role === 'Staff'
 
     const handleLogout = () => {
         logout()
@@ -36,7 +36,7 @@ const ProfilePage = () => {
                         <div className="bg-white rounded-lg overflow-hidden">
                             <nav className="p-2">
                                 {/* Nút Quản trị — chỉ hiện cho admin */}
-                                {isAdmin && (
+                                {isAdminOrStaff && (
                                     <>
                                         <Link
                                             to="/admin"
@@ -82,7 +82,7 @@ const ProfilePage = () => {
                     <div className="lg:hidden overflow-x-auto scrollbar-hide">
                         <div className="flex gap-2 pb-2 min-w-max">
                             {/* Nút Quản trị mobile — chỉ hiện cho admin */}
-                            {isAdmin && (
+                            {isAdminOrStaff && (
                                 <>
                                     <Link
                                         to="/admin"

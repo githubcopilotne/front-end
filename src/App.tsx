@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
-import { ProtectedRoute, GuestRoute, AdminRoute } from './components/common/AuthRoute'
+import { ProtectedRoute, GuestRoute, AdminRoute, AdminOnlyRoute } from './components/common/AuthRoute'
 import ClientLayout from './layouts/ClientLayout'
 import AdminLayout from './layouts/AdminLayout'
 import HomePage from './pages/client/HomePage'
@@ -60,12 +60,12 @@ function App() {
           <Route index element={<Navigate to="tong-quan" replace />} />
           <Route path="tong-quan" element={<DashboardPage />} />
           <Route path="khach-hang" element={<CustomerPage />} />
-          <Route path="nhan-vien" element={<div>Nhân viên - đang phát triển...</div>} />
-          <Route path="danh-muc" element={<CategoryPage />} />
+          <Route path="nhan-vien" element={<AdminOnlyRoute><div>Nhân viên - đang phát triển...</div></AdminOnlyRoute>} />
+          <Route path="danh-muc" element={<AdminOnlyRoute><CategoryPage /></AdminOnlyRoute>} />
           <Route path="san-pham" element={<ProductPage />} />
           <Route path="san-pham/:id" element={<AdminProductDetail />} />
           <Route path="don-hang" element={<div>Đơn hàng - đang phát triển...</div>} />
-          <Route path="voucher" element={<VoucherPage />} />
+          <Route path="voucher" element={<AdminOnlyRoute><VoucherPage /></AdminOnlyRoute>} />
           <Route path="danh-gia" element={<div>Đánh giá - đang phát triển...</div>} />
         </Route>
 
