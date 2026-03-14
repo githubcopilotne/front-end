@@ -16,3 +16,11 @@ export const formatDate = (dateStr: string): string => {
   const date = new Date(dateStr)
   return date.toLocaleDateString('vi-VN')
 }
+
+/**
+ * Format giới tính từ số sang text
+ * @param gender - 1 = Nam, 0 = Nữ
+ */
+export const formatGender = (gender: number): string => {
+  return gender === 1 ? 'Nam' : 'Nữ'
+}

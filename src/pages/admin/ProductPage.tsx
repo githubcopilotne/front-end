@@ -67,18 +67,18 @@ const ProductPage = () => {
 
             {/* Bảng sản phẩm */}
             <div className="bg-white rounded-lg border border-gray-200 overflow-x-auto">
-                <table className="w-full min-w-[900px]">
+                <table className="w-full">
                     <thead>
                         <tr className="bg-gray-50 border-b border-gray-200">
-                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 w-12">STT</th>
-                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 w-16">Ảnh</th>
-                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600">Tên sản phẩm</th>
-                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 w-32">Danh mục</th>
-                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 w-28">Giá</th>
-                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 w-24">Tồn kho</th>
-                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 w-28">Trạng thái</th>
-                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 w-28">Ngày tạo</th>
-                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 w-28">Thao tác</th>
+                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 whitespace-nowrap w-12">STT</th>
+                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 whitespace-nowrap w-16">Ảnh</th>
+                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 whitespace-nowrap">Tên sản phẩm</th>
+                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 whitespace-nowrap">Danh mục</th>
+                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 whitespace-nowrap">Giá</th>
+                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 whitespace-nowrap">Tồn kho</th>
+                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 whitespace-nowrap">Trạng thái</th>
+                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 whitespace-nowrap">Ngày tạo</th>
+                            <th className="text-left px-4 py-3 text-sm font-semibold text-gray-600 whitespace-nowrap">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>

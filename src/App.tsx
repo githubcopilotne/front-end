@@ -23,6 +23,7 @@ import DashboardPage from './pages/admin/DashboardPage'
 import CategoryPage from './pages/admin/CategoryPage'
 import VoucherPage from './pages/admin/VoucherPage'
 import ProductPage from './pages/admin/ProductPage'
+import CustomerPage from './pages/admin/CustomerPage'
 import AdminProductDetail from './pages/admin/AdminProductDetail'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -58,7 +59,7 @@ function App() {
         <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
           <Route index element={<Navigate to="tong-quan" replace />} />
           <Route path="tong-quan" element={<DashboardPage />} />
-          <Route path="khach-hang" element={<div>Khách hàng - đang phát triển...</div>} />
+          <Route path="khach-hang" element={<CustomerPage />} />
           <Route path="nhan-vien" element={<div>Nhân viên - đang phát triển...</div>} />
           <Route path="danh-muc" element={<CategoryPage />} />
           <Route path="san-pham" element={<ProductPage />} />
