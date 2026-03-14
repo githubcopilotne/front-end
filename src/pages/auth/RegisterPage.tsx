@@ -171,7 +171,7 @@ const RegisterPage = () => {
                 {/* Họ tên */}
                 <div>
                   <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
-                    Họ tên
+                    Họ tên <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -190,7 +190,7 @@ const RegisterPage = () => {
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
+                    Email <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -209,7 +209,7 @@ const RegisterPage = () => {
                 {/* Số điện thoại */}
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                    Số điện thoại
+                    Số điện thoại <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -228,7 +228,7 @@ const RegisterPage = () => {
                 {/* Mật khẩu */}
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                    Mật khẩu
+                    Mật khẩu <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <input
@@ -256,7 +256,7 @@ const RegisterPage = () => {
                 {/* Xác nhận mật khẩu */}
                 <div>
                   <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                    Xác nhận mật khẩu
+                    Xác nhận mật khẩu <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <input
