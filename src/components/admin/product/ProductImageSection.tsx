@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { Star, Upload, X, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import productService from '../../../services/productService'
+import useAuthStore from '../../../stores/authStore'
 
 interface ProductImageSectionProps {
     product: any
@@ -9,6 +10,9 @@ interface ProductImageSectionProps {
 }
 
 const ProductImageSection = ({ product, onRefresh }: ProductImageSectionProps) => {
+    const user = useAuthStore(state => state.user)
+    const isAdmin = user?.role === 'Admin'
+
     const images = product.images || []
     const hasMainImage = images.some((img: any) => img.isMain)
 
@@ -252,12 +256,14 @@ const ProductImageSection = ({ product, onRefresh }: ProductImageSectionProps) =
                                         <Star size={12} fill="white" />
                                         Đặt ảnh chính
                                     </button>
-                                    <button
-                                        onClick={() => setDeleteImageId(img.imageId)}
-                                        className="px-2 py-1 text-xs font-medium text-white bg-red-500 rounded hover:bg-red-600 transition-colors cursor-pointer"
-                                    >
-                                        <Trash2 size={12} />
-                                    </button>
+                                    {isAdmin && (
+                                        <button
+                                            onClick={() => setDeleteImageId(img.imageId)}
+                                            className="px-2 py-1 text-xs font-medium text-white bg-red-500 rounded hover:bg-red-600 transition-colors cursor-pointer"
+                                        >
+                                            <Trash2 size={12} />
+                                        </button>
+                                    )}
                                 </div>
                             )}
                         </div>

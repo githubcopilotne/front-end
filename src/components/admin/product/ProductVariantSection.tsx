@@ -3,6 +3,7 @@ import { Plus, Pencil, Trash2 } from 'lucide-react'
 import VariantCreateModal from './VariantCreateModal'
 import VariantStockModal from './VariantStockModal'
 import VariantDeleteDialog from './VariantDeleteDialog'
+import useAuthStore from '../../../stores/authStore'
 
 interface ProductVariantSectionProps {
     product: any
@@ -10,6 +11,9 @@ interface ProductVariantSectionProps {
 }
 
 const ProductVariantSection = ({ product, onRefresh }: ProductVariantSectionProps) => {
+    const user = useAuthStore(state => state.user)
+    const isAdmin = user?.role === 'Admin'
+
     const variants = product.variants || []
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [stockVariant, setStockVariant] = useState<any>(null)
@@ -59,13 +63,15 @@ const ProductVariantSection = ({ product, onRefresh }: ProductVariantSectionProp
                                         >
                                             <Pencil size={15} />
                                         </button>
-                                        <button
-                                            onClick={() => setDeleteVariant(v)}
-                                            className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer ml-2"
-                                            title="Xóa biến thể"
-                                        >
-                                            <Trash2 size={15} />
-                                        </button>
+                                        {isAdmin && (
+                                            <button
+                                                onClick={() => setDeleteVariant(v)}
+                                                className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer ml-2"
+                                                title="Xóa biến thể"
+                                            >
+                                                <Trash2 size={15} />
+                                            </button>
+                                        )}
                                     </td>
                                 </tr>
                             ))}

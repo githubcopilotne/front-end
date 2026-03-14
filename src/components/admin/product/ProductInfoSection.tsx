@@ -6,6 +6,7 @@ import { formatPrice, formatDate } from '../../../utils/format'
 import StatusBadge from '../../ui/StatusBadge'
 import ProductDeleteDialog from './ProductDeleteDialog'
 import ProductModal from './ProductModal'
+import useAuthStore from '../../../stores/authStore'
 
 interface ProductInfoSectionProps {
     product: any
@@ -13,6 +14,9 @@ interface ProductInfoSectionProps {
 }
 
 const ProductInfoSection = ({ product, onRefresh }: ProductInfoSectionProps) => {
+    const user = useAuthStore(state => state.user)
+    const isAdmin = user?.role === 'Admin'
+
     const [toggling, setToggling] = useState(false)
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)
@@ -49,21 +53,25 @@ const ProductInfoSection = ({ product, onRefresh }: ProductInfoSectionProps) => 
                         <Pencil size={14} />
                         Sửa
                     </button>
-                    <button
-                        onClick={handleToggleStatus}
-                        disabled={toggling}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        {toggling ? 'Đang xử lý...' : product.status === 1 ? (<><EyeOff size={14} /> Ngừng bán</>) : (<><Eye size={14} /> Đăng bán</>)}
-                    </button>
-                    <button
-                        onClick={() => setShowDeleteDialog(true)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
-                        title="Xóa sản phẩm"
-                    >
-                        <Trash2 size={14} />
-                        Xóa
-                    </button>
+                    {isAdmin && (
+                        <>
+                            <button
+                                onClick={handleToggleStatus}
+                                disabled={toggling}
+                                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {toggling ? 'Đang xử lý...' : product.status === 1 ? (<><EyeOff size={14} /> Ngừng bán</>) : (<><Eye size={14} /> Đăng bán</>)}
+                            </button>
+                            <button
+                                onClick={() => setShowDeleteDialog(true)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                                title="Xóa sản phẩm"
+                            >
+                                <Trash2 size={14} />
+                                Xóa
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
 
