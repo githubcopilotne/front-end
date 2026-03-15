@@ -24,6 +24,7 @@ import CategoryPage from './pages/admin/CategoryPage'
 import VoucherPage from './pages/admin/VoucherPage'
 import ProductPage from './pages/admin/ProductPage'
 import CustomerPage from './pages/admin/CustomerPage'
+import StaffPage from './pages/admin/StaffPage'
 import AdminProductDetail from './pages/admin/AdminProductDetail'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -60,7 +61,7 @@ function App() {
           <Route index element={<Navigate to="tong-quan" replace />} />
           <Route path="tong-quan" element={<DashboardPage />} />
           <Route path="khach-hang" element={<CustomerPage />} />
-          <Route path="nhan-vien" element={<AdminOnlyRoute><div>Nhân viên - đang phát triển...</div></AdminOnlyRoute>} />
+          <Route path="nhan-vien" element={<AdminOnlyRoute><StaffPage /></AdminOnlyRoute>} />
           <Route path="danh-muc" element={<AdminOnlyRoute><CategoryPage /></AdminOnlyRoute>} />
           <Route path="san-pham" element={<ProductPage />} />
           <Route path="san-pham/:id" element={<AdminProductDetail />} />
